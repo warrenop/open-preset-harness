@@ -18,6 +18,8 @@ fi
 
 gh api "repos/$REPO" -X PATCH -f has_discussions=true 2>/dev/null || true
 
+"$(dirname "$0")/github-labels.sh" "$REPO"
+
 gh issue create \
   --repo "$REPO" \
   --title "[scenario] SRE postmortem → debug preset (en-scenario)" \
