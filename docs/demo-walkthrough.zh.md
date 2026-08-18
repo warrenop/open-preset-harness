@@ -8,6 +8,18 @@
 
 **前置：** 已完成 [Harness 接入](harness-integration.zh.md)
 
+**一键 headless（Part A + B）：**
+
+```bash
+export DEEPSEEK_API_KEY=...   # 或配置 ~/.dsh/.credentials.yaml
+chmod +x scripts/demo-headless.sh
+./scripts/demo-headless.sh
+./scripts/demo-headless.sh --part-b   # 仅 Part B（用仓库预置 memory）
+./scripts/demo-headless.sh --fresh    # 清空 demo memory 后重跑 Part A
+```
+
+脚本从 Harness 根目录启动 headless，并通过 patch 里的 `projectRoot` 指向 `examples/demo-project`（headless 的 `process.cwd()` 是 Harness  checkout，不是 demo 目录）。
+
 ---
 
 ## 角色
@@ -30,20 +42,27 @@ cd open-preset-harness/examples/demo-project
 git init
 ```
 
-### A2. Session 1，preset `standard`
+### A2. Session 1（写记忆）
 
-**Headless 示例：**
+**Headless 示例（推荐用脚本）：**
+
+```bash
+./scripts/demo-headless.sh --fresh --part-a
+```
+
+**手动 headless（需自行在 patch 中设置 `projectRoot` 为 demo 目录）：**
 
 ```bash
 cd deepseek-harness-master
-pnpm dsh --profile headless \
-  --cwd ../open-preset-harness/examples/demo-project \
-  --agent-preset standard \
+npm run dsh -- --profile headless \
+  --patch ../open-preset-harness/examples/harness-plugin.patch.yml \
   "1. 调用 memory_status
-2. remember 写入 security 域：Admin routes require step-up MFA since audit（正文写 requireStepUp、禁止 localStorage 存 refresh token）
+2. remember 写入 security 域：Admin routes require step-up MFA since audit
 3. remember 写入 engineering 域：Public API pagination uses opaque cursors only
 4. 再 memory_status 确认 entry_count >= 2"
 ```
+
+> headless 当前无 `--cwd` / `--agent-preset` CLI 旗标；双 preset 场景请用 Web UI 切换 preset，或分两次 headless session 模拟。
 
 **Web：** 新建 session → 工作区选 demo-project → preset **standard** → 粘贴同类任务。
 
@@ -60,14 +79,20 @@ cat .dsh/memory/index.md
 
 ## Part B — Preset B 读取（新 session）
 
-### B1. Session 2，preset `code`
+### B1. Session 2（读记忆）
 
-**必须是新 session、不同 preset、同一 cwd。**
+**必须是新 session、同一 demo 项目。Web 上请换 preset **code**；headless 用脚本模拟第二次 session：**
 
 ```bash
-pnpm dsh --profile headless \
-  --cwd ../open-preset-harness/examples/demo-project \
-  --agent-preset code \
+./scripts/demo-headless.sh --part-b
+```
+
+**手动 headless：**
+
+```bash
+cd deepseek-harness-master
+npm run dsh -- --profile headless \
+  --patch ../open-preset-harness/examples/harness-plugin.patch.yml \
   "你要做 admin dashboard API，你没参加过安全评审。
 1. memory_status
 2. recall domain security — admin 有什么约束？

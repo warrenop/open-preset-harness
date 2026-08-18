@@ -8,6 +8,18 @@ English | [中文](demo-walkthrough.zh.md)
 
 **Prerequisites:** [Harness integration](harness-integration.md) complete.
 
+**One-shot headless (Part A + B):**
+
+```bash
+export DEEPSEEK_API_KEY=...   # or configure ~/.dsh/.credentials.yaml
+chmod +x scripts/demo-headless.sh
+./scripts/demo-headless.sh
+./scripts/demo-headless.sh --part-b   # Part B only (uses seeded .dsh/memory/)
+./scripts/demo-headless.sh --fresh    # wipe demo memory before Part A
+```
+
+The script boots headless from the Harness checkout and sets `projectRoot` in the patch to `examples/demo-project` (headless `process.cwd()` is the Harness tree, not the demo project).
+
 ---
 
 ## Cast
@@ -32,26 +44,24 @@ cd /path/to/open-preset-harness/examples/demo-project
 git init   # skip if already a repo
 ```
 
-### A2. Start Session 1 with preset `standard`
+### A2. Start Session 1 (write memory)
 
-**Headless:**
+**Headless (recommended):**
+
+```bash
+./scripts/demo-headless.sh --fresh --part-a
+```
+
+**Manual headless** (set `projectRoot` to the demo directory in your patch, or use `examples/harness-plugin.patch.yml` via a temp overlay like the script):
 
 ```bash
 cd /path/to/deepseek-harness-master
-pnpm dsh --profile headless \
-  --cwd /path/to/open-preset-harness/examples/demo-project \
-  --agent-preset standard \
-  "You are doing a security pass on this repo.
-
-1. Call memory_status.
-2. Use remember to save ONE fact in domain security:
-   summary: Admin routes require step-up MFA since audit
-   body: All /admin/* routes use requireStepUp middleware; no refresh tokens in localStorage.
-3. Use remember to save ONE fact in domain engineering:
-   summary: Public API pagination uses opaque cursors only
-   body: No offset pagination on public endpoints.
-4. Call memory_status again and confirm entry_count >= 2."
+npm run dsh -- --profile headless \
+  --patch /path/to/open-preset-harness/examples/harness-plugin.patch.yml \
+  "Call memory_status, remember security + engineering facts, memory_status again."
 ```
+
+> Headless has no `--cwd` / `--agent-preset` flags today. For true dual-preset flows, use the Web UI or two separate headless sessions.
 
 **Web:** New session → workspace = `demo-project` → preset **standard** → paste the same task.
 
@@ -69,22 +79,21 @@ Expected: `index.md` lists `security` and `engineering` domains.
 
 ## Part B — Preset B reads memory (new session)
 
-### B1. Start Session 2 with preset `code`
+### B1. Start Session 2 (read memory)
 
-Important: **new session**, different preset, **same project cwd**.
-
-**Headless:**
+Important: **new session**, same demo project. On Web, switch to preset **code**; headless simulates a second session via:
 
 ```bash
-pnpm dsh --profile headless \
-  --cwd /path/to/open-preset-harness/examples/demo-project \
-  --agent-preset code \
-  "You are implementing a new admin dashboard API. You were NOT in the security review.
+./scripts/demo-headless.sh --part-b
+```
 
-1. Call memory_status — note domains available.
-2. recall domain security — what constraints apply to admin routes?
-3. recall domain engineering — any API pagination rules?
-4. In one paragraph, state what you learned WITHOUT calling any other tools."
+**Manual headless:**
+
+```bash
+cd /path/to/deepseek-harness-master
+npm run dsh -- --profile headless \
+  --patch /path/to/open-preset-harness/examples/harness-plugin.patch.yml \
+  "recall domain security and engineering; summarize admin API constraints in one paragraph."
 ```
 
 ### B2. Success criteria

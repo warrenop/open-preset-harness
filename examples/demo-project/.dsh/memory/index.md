@@ -1,8 +1,8 @@
 ---
 oph-memory-schema: 1
 oph-index-version: 1
-project_root: "/path/to/open-preset-harness/examples/demo-project"
-updated_at: "2026-08-18T08:00:00.000Z"
+project_root: /Users/warrenmini/workspace/mygit/open-preset-harness/examples/demo-project
+updated_at: 2026-08-18T09:46:53.273Z
 domain_count: 2
 entry_count: 2
 ---
@@ -16,12 +16,12 @@ entry_count: 2
 
 | Domain | Entries | Last updated | Latest summary |
 |--------|---------|--------------|----------------|
-| security | 1 | 2026-08-18 | Admin routes require step-up MFA since audit |
 | engineering | 1 | 2026-08-18 | Public API pagination uses opaque cursors only |
+| security | 1 | 2026-08-18 | Admin routes require step-up MFA since audit |
 
 ## Recent decisions
 
-_(none yet)_
+- **2026-08-18** `decisions/2026-08-admin-routes-step-up-mfa.md` — Admin routes require step-up MFA since audit (accepted)
 
 ## How to contribute
 

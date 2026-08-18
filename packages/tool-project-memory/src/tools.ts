@@ -57,8 +57,8 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
         additionalProperties: false,
         properties: {
           kind: { type: 'string', required: true, enum: ['recall-result'] },
-          query: { type: ['string', 'null'], required: true },
-          domain: { type: ['string', 'null'], required: true },
+          query: { oneOf: [{ type: 'string' }, { type: 'null' }], required: true },
+          domain: { oneOf: [{ type: 'string' }, { type: 'null' }], required: true },
           entries: {
             type: 'array',
             required: true,

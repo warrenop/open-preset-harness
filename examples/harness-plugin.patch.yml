@@ -1,0 +1,10 @@
+- insert:
+    - id: dsh-tool-project-memory
+      name: '@open-preset-harness/dsh-tool-project-memory/plugin'
+      config:
+        indexInjectMaxBytes: 4096
+        recallMaxBytes: 32768
+        rememberMaxBodyBytes: 16384
+        maxDomains: 64
+        readOnly: false
+        writeDenyDomains: []

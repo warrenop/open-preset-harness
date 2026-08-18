@@ -2,6 +2,9 @@
 #
 # Append to your profile cordis.patch.yml (~/.dsh/profiles/<profile>/cordis.patch.yml)
 # Patch uses `insert` — id-only rows target existing entries; new plugins need insert.
+#
+# See docs/harness-integration.md for link + profile steps.
+# See docs/phase-0-memory-api.md for tool API.
 
 - insert:
     - id: dsh-tool-project-memory
@@ -13,9 +16,3 @@
         maxDomains: 64
         readOnly: false
         writeDenyDomains: []
-
-Then symlink or link the package into Harness node_modules — see docs/harness-integration.md.
-
-First `remember` call creates `.dsh/memory/` under your git project root.
-
-See [docs/phase-0-memory-api.md](../docs/phase-0-memory-api.md).

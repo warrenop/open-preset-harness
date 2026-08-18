@@ -125,8 +125,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## 快速开始
 
 1. [Harness 接入](docs/harness-integration.zh.md)
-2. [双 Preset Demo](docs/demo-walkthrough.zh.md)
+2. [双 Preset Demo](docs/demo-walkthrough.zh.md) — 或 `./scripts/demo-headless.sh`（需 `DEEPSEEK_API_KEY`）
 3. 用 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml) 反馈，标 `cn-scenario` 或 `en-scenario`
+
+首发稿大纲：[docs/launch-post.zh.md](docs/launch-post.zh.md)
 
 ```bash
 chmod +x scripts/link-harness.sh
