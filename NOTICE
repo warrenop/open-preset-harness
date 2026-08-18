@@ -1,0 +1,20 @@
+open-preset-harness
+Copyright (c) 2026 open-preset-harness contributors
+
+This project includes software developed by third parties.
+
+---
+
+DeepSeek Harness
+Copyright (c) 2026 DeepSeek
+SPDX-License-Identifier: MIT
+Source: https://github.com/deepseek-ai/DeepSeek-Harness
+License: MIT (see LICENSE)
+
+Portions of this project are derived from or interoperate with DeepSeek Harness.
+The above copyright and permission notice shall be included in all copies or
+substantial portions of any derived works, per the MIT License.
+
+---
+
+Additional components may list their own licenses in respective directories.

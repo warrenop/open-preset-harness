@@ -1,0 +1,67 @@
+{
+  "name": "@open-preset-harness/dsh-tool-project-memory",
+  "version": "0.0.1",
+  "description": "Project organizational memory tools (recall, remember) for DeepSeek Harness",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./plugin": {
+      "types": "./lib/plugin.d.ts",
+      "default": "./lib/plugin.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:plugin": "tsc -p tsconfig.plugin.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "yaml": "^2.7.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=0.1.0",
+    "@deepseek-ai/dsh-agent": ">=0.1.0",
+    "@deepseek-ai/dsh-llm": ">=0.1.0",
+    "@deepseek-ai/dsh-tools": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": { "optional": true },
+    "@deepseek-ai/dsh-agent": { "optional": true },
+    "@deepseek-ai/dsh-llm": { "optional": true },
+    "@deepseek-ai/dsh-tools": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "@deepseek-ai/cordis": "file:../../../deepseek-harness-master/vendor/cordis/cordis",
+    "@deepseek-ai/dsh-agent": "file:../../../deepseek-harness-master/packages/core/agent",
+    "@deepseek-ai/dsh-llm": "file:../../../deepseek-harness-master/packages/llm/llm",
+    "@deepseek-ai/dsh-tools": "file:../../../deepseek-harness-master/packages/core/tools"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warrenop/open-preset-harness.git",
+    "directory": "packages/tool-project-memory"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "cordis",
+    "project-memory",
+    "agent"
+  ]
+}

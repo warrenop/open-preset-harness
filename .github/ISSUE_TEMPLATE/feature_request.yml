@@ -1,0 +1,40 @@
+name: Feature request / 功能建议
+description: Phase 1+ idea — governance, distill, search, enterprise
+title: "[feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    validations:
+      required: true
+    attributes:
+      label: Problem or use case / 问题或使用场景
+      description: Link a scenario Issue if one exists
+
+  - type: textarea
+    id: proposal
+    validations:
+      required: true
+    attributes:
+      label: Proposed behavior / 建议行为
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Suggested phase
+      options:
+        - Phase 0 (must-have before demo)
+        - Phase 1 (team-ready)
+        - Phase 2 (retrieval scale)
+        - Phase 3 (enterprise)
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Touch areas
+      options:
+        - label: remember / recall tools
+        - label: on-disk schema (.dsh/memory/)
+        - label: Harness inject / session integration
+        - label: docs only

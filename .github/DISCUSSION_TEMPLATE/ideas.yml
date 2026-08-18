@@ -1,0 +1,21 @@
+title: "[idea] "
+labels:
+  - idea
+body:
+  - type: markdown
+    value: |
+      **Ideas & architecture** — not quite a bug or a filled scenario yet.
+      - Market tag: `cn` or `en` in the title helps us prioritize.
+      - For a complete workflow, use **Scenario** Issues instead.
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: What should open-preset-harness do differently or next?
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: Who benefits? Token savings, team workflow, compliance…

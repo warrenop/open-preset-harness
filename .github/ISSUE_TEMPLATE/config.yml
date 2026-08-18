@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Scenario library (docs)
+    url: https://github.com/warrenop/open-preset-harness/blob/main/docs/scenarios.md
+    about: Browse existing workflows before opening a duplicate scenario
+  - name: Phase 0 API spec
+    url: https://github.com/warrenop/open-preset-harness/blob/main/docs/phase-0-memory-api.md
+    about: Tool parameters, frontmatter schema, on-disk layout

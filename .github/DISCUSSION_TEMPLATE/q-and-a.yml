@@ -1,0 +1,18 @@
+title: "[q] "
+labels:
+  - question
+body:
+  - type: markdown
+    value: |
+      **Q&A** — integration, domains, git vs local memory, Harness vs AGENTS.md/skills.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question / 问题
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      description: Harness profile, preset names, what you already tried

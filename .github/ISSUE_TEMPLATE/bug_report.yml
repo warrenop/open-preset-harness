@@ -1,0 +1,57 @@
+name: Bug report / 缺陷报告
+description: Something broke in the plugin, tools, or on-disk memory format
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: what
+    validations:
+      required: true
+    attributes:
+      label: What happened? / 发生了什么？
+      placeholder: recall returned empty, remember failed, index inject missing…
+
+  - type: textarea
+    id: expected
+    validations:
+      required: true
+    attributes:
+      label: What did you expect? / 期望行为？
+
+  - type: textarea
+    id: reproduce
+    validations:
+      required: true
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      placeholder: |
+        1. Harness version / profile
+        2. remember / recall args
+        3. .dsh/memory/ state (redact secrets)
+
+  - type: input
+    id: harness
+    attributes:
+      label: DeepSeek Harness version or commit
+      placeholder: e.g. deepseek-harness @ abc1234
+
+  - type: input
+    id: oph
+    attributes:
+      label: open-preset-harness version or commit
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      options:
+        - macOS
+        - Linux
+        - Windows
+        - other
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error message or tool result (redact secrets)

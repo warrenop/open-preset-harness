@@ -1,0 +1,89 @@
+name: Scenario / 场景贡献
+description: Propose a real-world workflow — helps us test market fit (CN + EN welcome)
+title: "[scenario] "
+labels:
+  - scenario
+body:
+  - type: markdown
+    value: |
+      Tag your market: add **`cn-scenario`** or **`en-scenario`** in the title or a comment after filing.
+      See [docs/scenarios.md](https://github.com/warrenop/open-preset-harness/blob/main/docs/scenarios.md) for examples.
+
+  - type: dropdown
+    id: market
+    attributes:
+      label: Primary audience / 主要受众
+      options:
+        - en-scenario
+        - cn-scenario
+        - both
+
+  - type: input
+    id: title_short
+    validations:
+      required: true
+    attributes:
+      label: Scenario title / 场景标题
+      placeholder: e.g. SRE postmortem → debug preset
+
+  - type: input
+    id: industry
+    validations:
+      required: true
+    attributes:
+      label: Industry or context / 行业或上下文
+      placeholder: e.g. SaaS, OSS maintainer, agency client work
+
+  - type: input
+    id: writer
+    validations:
+      required: true
+    attributes:
+      label: Writer preset (example) / 写入方 Preset
+      placeholder: e.g. security-review, PM, finance
+
+  - type: input
+    id: reader
+    validations:
+      required: true
+    attributes:
+      label: Reader preset (example) / 读取方 Preset
+      placeholder: e.g. backend, QA, budget-planning
+
+  - type: input
+    id: domains
+    validations:
+      required: true
+    attributes:
+      label: Memory domain(s) / 记忆领域
+      placeholder: e.g. security, api, client (comma-separated)
+
+  - type: textarea
+    id: without
+    validations:
+      required: true
+    attributes:
+      label: Without shared memory / 没有共享记忆时
+      description: What goes wrong, wastes tokens, or repeats work?
+
+  - type: textarea
+    id: with
+    validations:
+      required: true
+    attributes:
+      label: With shared memory / 有共享记忆时
+      description: What improves? Be specific.
+
+  - type: textarea
+    id: optional
+    attributes:
+      label: Optional — sensitivity, compliance, git vs local-only
+      description: PII, write ACL, whether memory should live in git
+
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I can open a PR adding this row to docs/scenarios.md
+          required: false

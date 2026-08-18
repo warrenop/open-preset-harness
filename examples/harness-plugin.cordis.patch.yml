@@ -1,0 +1,21 @@
+# Example: enable project memory in Harness
+#
+# Append to your profile cordis.patch.yml (~/.dsh/profiles/<profile>/cordis.patch.yml)
+# Patch uses `insert` — id-only rows target existing entries; new plugins need insert.
+
+- insert:
+    - id: dsh-tool-project-memory
+      name: '@open-preset-harness/dsh-tool-project-memory/plugin'
+      config:
+        indexInjectMaxBytes: 4096
+        recallMaxBytes: 32768
+        rememberMaxBodyBytes: 16384
+        maxDomains: 64
+        readOnly: false
+        writeDenyDomains: []
+
+Then symlink or link the package into Harness node_modules — see docs/harness-integration.md.
+
+First `remember` call creates `.dsh/memory/` under your git project root.
+
+See [docs/phase-0-memory-api.md](../docs/phase-0-memory-api.md).

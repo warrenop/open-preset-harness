@@ -1,0 +1,10 @@
+node_modules/
+lib/
+dist/
+*.log
+.DS_Store
+.env
+.env.*
+
+# Local experiment memory (use project .dsh/memory in real repos)
+.dsh/memory/local-test/

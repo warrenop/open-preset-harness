@@ -1,0 +1,25 @@
+{
+  "name": "open-preset-harness",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Project organizational memory for DeepSeek Harness multi-preset agents",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "doc:check": "node -e \"console.log('Docs + packages monorepo.')\"",
+    "test": "pnpm -r test",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warrenop/open-preset-harness.git"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "agent",
+    "preset",
+    "project-memory",
+    "organizational-memory"
+  ]
+}
