@@ -6,6 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DSH 插件](https://img.shields.io/badge/DSH-Memory%20插件-dsh--tool--project--memory-blue)](DSH-PLUGIN.md)
+[![Wiki](https://img.shields.io/badge/docs-Wiki-green)](docs/wiki/README.md)
 
 > **DSH Profile Bundle：** [`dsh-tool-project-memory`](packages/tool-project-memory) · 分类：**Memory** · [安装说明](README.md#install-profile-bundle--recommended) · [上架清单](packages/tool-project-memory/PUBLISH.md)
 
@@ -48,7 +49,8 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 - **合规：** 保留上游版权，见 [NOTICE](NOTICE)
 - **身份：** **独立社区项目**，非 DeepSeek 官方产品
 
-详见 [docs/architecture.md](docs/architecture.md)、[docs/phase-0-memory-api.md](docs/phase-0-memory-api.md)。
+详见 [docs/architecture.md](docs/architecture.md)、[docs/phase-0-memory-api.md](docs/phase-0-memory-api.md)。  
+**Wiki：** [docs/wiki](docs/wiki/README.md)
 
 ---
 

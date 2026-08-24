@@ -6,6 +6,7 @@ English | [中文](README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DSH Plugin](https://img.shields.io/badge/DSH-Memory%20plugin-dsh--tool--project--memory-blue)](DSH-PLUGIN.md)
+[![Wiki](https://img.shields.io/badge/docs-Wiki-green)](docs/wiki/README.md)
 
 > **DSH Profile Bundle:** [`dsh-tool-project-memory`](packages/tool-project-memory) · Category: **Memory** · [Install](#install-profile-bundle--recommended) · [DSH1024 checklist](packages/tool-project-memory/PUBLISH.md)
 
