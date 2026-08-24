@@ -2,6 +2,8 @@
 
 项目知识库入口。**多 Preset 共享的项目组织记忆** — DSH Memory 插件 [`dsh-tool-project-memory`](../../packages/tool-project-memory)。
 
+> **GitHub 标签页 Wiki 是空的？** 那是独立系统，见 [GITHUB-WIKI-SETUP.zh.md](GITHUB-WIKI-SETUP.zh.md)。本目录是主仓库内的完整 Wiki。
+
 English hub: [en/README.md](en/README.md)
 
 ---
