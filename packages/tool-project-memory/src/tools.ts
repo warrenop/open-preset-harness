@@ -1,5 +1,4 @@
 import type { Context } from '@deepseek-ai/cordis'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { Agent } from '@deepseek-ai/dsh-agent'
 import { prepareIndexInject, projectMemoryIndexSource } from './inject-index.ts'
@@ -7,6 +6,11 @@ import { memoryStatus, recallEntries } from './recall.ts'
 import { rememberEntry } from './remember.ts'
 import type { ProjectMemoryConfig, RecallInput, RememberInput } from './types.ts'
 import { MemoryError } from './types.ts'
+
+/** Deep-clone tool outputs so readonly arrays satisfy defineTool JSON schema types. */
+function toolJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T
+}
 
 /** Resolve session cwd from agent header or fallback. */
 function sessionCwd(agent: Agent): string {
@@ -87,7 +91,7 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
           limit: args.limit,
           include_superseded: args.include_superseded,
         }
-        return await recallEntries(sessionCwd(exec.agent), config, input)
+        return toolJson(await recallEntries(sessionCwd(exec.agent), config, input)) as never
       }
       catch (e) {
         if (e instanceof MemoryError) throw new Error(`${e.code}: ${e.message}`)
@@ -216,7 +220,7 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
     },
     async execute(_args, exec) {
       if (!exec.agent) throw new Error('memory_status requires an owning agent session')
-      return memoryStatus(sessionCwd(exec.agent), config)
+      return toolJson(await memoryStatus(sessionCwd(exec.agent), config)) as never
     },
     presentCall: () => ({ card: 'generic', title: 'Project memory status', kind: 'search' }),
   }))
@@ -245,7 +249,7 @@ export function installIndexInject(ctx: Context, config: ProjectMemoryConfig): v
     payload.agent.inject({
       content: [{ type: 'text', text: indexPayload.text }],
       source: projectMemoryIndexSource(indexPayload.digest, indexPayload.path),
-    })
+    } as never)
     injectedIndexDigest.set(payload.agent, indexPayload.digest)
     return decision
   })

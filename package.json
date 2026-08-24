@@ -16,6 +16,7 @@
     "url": "https://github.com/warrenop/open-preset-harness.git"
   },
   "keywords": [
+    "dsh-plugin",
     "deepseek-harness",
     "agent",
     "preset",

@@ -1,34 +1,61 @@
-# @open-preset-harness/dsh-tool-project-memory
+# dsh-tool-project-memory
 
-English | 中文见 [根 README](../../README.zh.md)
+English | 中文见下方
 
-Cordis plugin: **`recall`**, **`remember`**, **`memory_status`** + blank-session **`index.md`** inject.
+**DSH Profile Bundle** — shared project organizational memory for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness): `recall`, `remember`, `memory_status` tools + blank-session `index.md` inject. One memory pool, every preset reads.
 
 Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md)
 
-## Install (development)
+## Install (DSH1024 / Profile Bundle)
 
-Link against a local [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) checkout:
+Recommended — installs the bundle patch into your profile automatically:
 
-```bash
-cd open-preset-harness
-pnpm install
-pnpm --filter @open-preset-harness/dsh-tool-project-memory build
+```sh
+# Interactive web profile
+dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+
+# Headless / automation profile
+dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
 ```
 
-Add to your Harness profile `cordis.patch.yml`:
+From a local clone:
 
-```yaml
-- id: dsh-tool-project-memory
-  plugin: "@open-preset-harness/dsh-tool-project-memory"
-  config:
-    indexInjectMaxBytes: 4096
-    recallMaxBytes: 32768
-    rememberMaxBodyBytes: 16384
-    maxDomains: 64
+```sh
+dsh plugin --profile web add ./packages/tool-project-memory
 ```
 
-Ensure the package resolves from your install path (file: link or npm publish).
+Verify:
+
+```sh
+dsh --profile web --dump-config | grep dsh-tool-project-memory
+```
+
+## Marketplace (DSH1024)
+
+| Field | Value |
+|-------|-------|
+| **Category** | Memory |
+| **Package** | `dsh-tool-project-memory` |
+| **Cordis row id** | `dsh-tool-project-memory` |
+| **Repository** | [warrenop/open-preset-harness](https://github.com/warrenop/open-preset-harness) (`packages/tool-project-memory`) |
+| **Discovery topic** | `dsh-plugin` on the GitHub repository |
+
+Listings on [DSH1024](https://deepseek1024.com/) require passing DSH plugin spec checks (`dsh.bundle.patch`, `cordis.patch.yml`, build output, profile install docs). Run locally:
+
+```sh
+dsh plugin --profile web add github:omdsh-dev/dsh-plugin-check
+dsh run "Use plugin_check with action check on packages/tool-project-memory"
+```
+
+## Permissions
+
+| Capability | Scope |
+|------------|-------|
+| **Filesystem** | Read/write `<projectRoot>/.dsh/memory/` only (domains, decisions, index) |
+| **Network** | None |
+| **Credentials** | None |
+
+Requires a git project root (nearest `.git` ancestor) for stable path resolution.
 
 ## Project layout
 
@@ -41,18 +68,41 @@ Create in your repo:
 └── decisions/
 ```
 
-## Test
+## Development
 
 ```bash
-npm install && npm test
+cd packages/tool-project-memory
+npm install && npm run check
 ```
 
-Core tests (`remember` / `recall` / frontmatter) run without Harness installed. Harness peers are optional until you link a local [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) checkout for `npm run build` (plugin entry).
+Link against a local Harness checkout — see [docs/harness-integration.md](../../docs/harness-integration.md).
 
 ## Export surface
 
 | Export | Role |
 |--------|------|
-| `apply(ctx, config)` | Cordis plugin entry |
-| `rememberEntry` / `recallEntries` | Programmatic API |
+| `.` (`apply`) | Cordis plugin entry |
+| `./core` | Programmatic API without loading the plugin row |
+| `rememberEntry` / `recallEntries` | Core recall/remember |
 | `prepareIndexInject` | Index baseline for inject |
+
+---
+
+## 中文
+
+**多 Preset 共享的项目组织记忆** — 在 Harness 上提供 `recall` / `remember` / `memory_status` 与空白 session 的 `index.md` 注入。
+
+### 安装
+
+```sh
+dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+```
+
+### DSH1024 上架
+
+- 分类：**Memory**
+- npm 包名：`dsh-tool-project-memory`
+- 仓库需打 GitHub topic：`dsh-plugin`
+- 包内已含 `dsh.bundle.patch` 与 `cordis.patch.yml`，符合 Profile Bundle 规范
+
+详见 [根 README 中文](../../README.zh.md)。

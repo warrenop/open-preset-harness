@@ -171,7 +171,7 @@ Call `remember` with distilled facts. Prefer one fact per call. Tag the correct 
 
 ### 3.1 Package
 
-- **Name:** `@open-preset-harness/dsh-tool-project-memory` (npm scope TBD at publish time)
+- **Name:** `dsh-tool-project-memory` (DSH1024 Profile Bundle)
 - **Cordis plugin id:** `dsh-tool-project-memory`
 - **inject:** `['tools', 'agents']` (+ `fs` when available for sandboxed reads)
 

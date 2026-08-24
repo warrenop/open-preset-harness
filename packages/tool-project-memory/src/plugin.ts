@@ -1,6 +1,6 @@
 /**
  * Cordis plugin entry — requires DeepSeek Harness peer dependencies.
- * @module @open-preset-harness/dsh-tool-project-memory/plugin
+ * @module dsh-tool-project-memory
  */
 
 import type { Context } from '@deepseek-ai/cordis'

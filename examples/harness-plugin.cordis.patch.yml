@@ -1,14 +1,14 @@
-# Example: enable project memory in Harness
+# Example: enable project memory in Harness (manual profile patch)
 #
-# Append to your profile cordis.patch.yml (~/.dsh/profiles/<profile>/cordis.patch.yml)
-# Patch uses `insert` — id-only rows target existing entries; new plugins need insert.
+# Prefer Profile Bundle install instead:
+#   dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory
 #
+# If you patch manually, append to ~/.dsh/profiles/<profile>/cordis.patch.yml
 # See docs/harness-integration.md for link + profile steps.
-# See docs/phase-0-memory-api.md for tool API.
 
 - insert:
     - id: dsh-tool-project-memory
-      name: '@open-preset-harness/dsh-tool-project-memory/plugin'
+      name: dsh-tool-project-memory
       config:
         indexInjectMaxBytes: 4096
         recallMaxBytes: 32768

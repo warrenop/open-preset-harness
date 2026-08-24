@@ -133,7 +133,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 |-----------|--------|
 | Memory API draft | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
 | File-based `.dsh/memory/` convention | ✅ Implemented in plugin core |
-| `remember` / `recall` tools plugin | 🚧 [packages/tool-project-memory](packages/tool-project-memory) |
+| `remember` / `recall` tools plugin | ✅ [dsh-tool-project-memory](packages/tool-project-memory) (DSH Profile Bundle) |
 | Demo: two presets, one memory pool | 📝 [walkthrough](docs/demo-walkthrough.md) + [demo-project](examples/demo-project/) |
 
 Star ⭐ if you want updates. **Issues and scenario PRs are the best way to help us validate the idea.**
@@ -174,7 +174,28 @@ Priorities shift with **your Issues** — tell us your scenario.
 
 ## Quick start
 
-> Plugin implementation: [packages/tool-project-memory](packages/tool-project-memory) · tests passing
+> **DSH Memory plugin:** [packages/tool-project-memory](packages/tool-project-memory) · `npm run check` passing
+
+### Install (Profile Bundle — recommended)
+
+```bash
+dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+dsh --profile web --dump-config | grep dsh-tool-project-memory
+```
+
+Headless / CI:
+
+```bash
+dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+```
+
+From a local clone:
+
+```bash
+dsh plugin --profile web add ./packages/tool-project-memory
+```
+
+### Develop locally
 
 1. [Harness integration](docs/harness-integration.md) — link plugin into local Harness
 2. [Dual-preset demo](docs/demo-walkthrough.md) — `standard` writes, `code` reads
@@ -184,6 +205,15 @@ Priorities shift with **your Issues** — tell us your scenario.
 chmod +x scripts/link-harness.sh
 ./scripts/link-harness.sh /path/to/deepseek-harness-master
 ```
+
+### DSH1024 marketplace
+
+| Field | Value |
+|-------|-------|
+| Category | Memory |
+| Package | `dsh-tool-project-memory` |
+| Install | `dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory` |
+| Listing | [DSH1024](https://deepseek1024.com/) (discovery via GitHub topic `dsh-plugin`) |
 
 ---
 

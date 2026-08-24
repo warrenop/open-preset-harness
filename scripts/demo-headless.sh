@@ -66,7 +66,7 @@ trap cleanup EXIT
 cat > "$TEMP_PATCH" <<EOF
 - insert:
     - id: dsh-tool-project-memory
-      name: '@open-preset-harness/dsh-tool-project-memory/plugin'
+      name: dsh-tool-project-memory
       config:
         projectRoot: "$DEMO"
         indexInjectMaxBytes: 4096
@@ -94,8 +94,8 @@ fi
 
 PROFILE_DIR="${HOME}/.dsh/profiles/${PROFILE}"
 PLUGIN_PKG="$ROOT/packages/tool-project-memory"
-PROFILE_PLUGIN="$PROFILE_DIR/node_modules/@open-preset-harness/dsh-tool-project-memory"
-mkdir -p "$PROFILE_DIR/node_modules/@open-preset-harness"
+PROFILE_PLUGIN="$PROFILE_DIR/node_modules/dsh-tool-project-memory"
+mkdir -p "$PROFILE_DIR/node_modules"
 if [[ ! -e "$PROFILE_PLUGIN" ]]; then
   echo "→ linking plugin into $PROFILE profile"
   ln -sfn "$PLUGIN_PKG" "$PROFILE_PLUGIN"

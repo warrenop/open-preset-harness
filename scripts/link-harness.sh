@@ -21,11 +21,11 @@ npm link
 cd "$HARNESS"
 if [[ -f pnpm-lock.yaml ]]; then
   echo "→ pnpm workspace detected — add override manually if npm link fails:"
-  echo '  "pnpm": { "overrides": { "@open-preset-harness/dsh-tool-project-memory": "link:'"$OPH_PKG"'" } }'
+  echo '  "pnpm": { "overrides": { "dsh-tool-project-memory": "link:'"$OPH_PKG"'" } }'
 fi
-npm link @open-preset-harness/dsh-tool-project-memory 2>/dev/null || true
+npm link dsh-tool-project-memory 2>/dev/null || true
 
-node -e "import('@open-preset-harness/dsh-tool-project-memory/plugin').then(m => console.log('OK plugin:', m.name))" \
+node -e "import('dsh-tool-project-memory').then(m => console.log('OK plugin:', m.name))" \
   || echo "WARN: import check failed — complete peer link per docs/harness-integration.md"
 
 echo "Done. Append examples/harness-plugin.cordis.patch.yml to your profile cordis.patch.yml"

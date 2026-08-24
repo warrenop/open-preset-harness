@@ -1,6 +1,6 @@
 /**
  * Core exports — no DeepSeek Harness peer dependencies required.
- * @module @open-preset-harness/dsh-tool-project-memory
+ * @module dsh-tool-project-memory/core
  */
 
 export type {

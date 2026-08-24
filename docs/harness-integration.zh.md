@@ -34,11 +34,19 @@ npm install && npm test && npm run build
 
 ---
 
-## 步骤 2 — link 到 Harness
+## 步骤 2 — 安装到 Profile（推荐，DSH1024 规范）
+
+```bash
+dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+# 或本地 clone：
+dsh plugin --profile headless add ./packages/tool-project-memory
+```
+
+## 步骤 2b — link 到 Harness（开发调试）
 
 ```bash
 cd open-preset-harness/packages/tool-project-memory && npm link
-cd deepseek-harness-master && npm link @open-preset-harness/dsh-tool-project-memory
+cd deepseek-harness-master && npm link dsh-tool-project-memory
 ```
 
 pnpm 用户可在 Harness 根 `package.json` 加：
@@ -46,7 +54,7 @@ pnpm 用户可在 Harness 根 `package.json` 加：
 ```json
 "pnpm": {
   "overrides": {
-    "@open-preset-harness/dsh-tool-project-memory": "link:../open-preset-harness/packages/tool-project-memory"
+    "dsh-tool-project-memory": "link:../open-preset-harness/packages/tool-project-memory"
   }
 }
 ```

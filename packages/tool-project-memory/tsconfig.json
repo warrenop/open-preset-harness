@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "lib": ["ES2024"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
-    "lib": ["ES2022"],
+    "types": ["node"],
     "strict": true,
     "noImplicitAny": true,
     "declaration": true,
@@ -18,5 +19,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
-  "exclude": ["src/plugin.ts", "src/tools.ts"]
+  "exclude": ["tests"]
 }

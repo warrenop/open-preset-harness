@@ -61,7 +61,15 @@ chmod +x scripts/install-harness-link.sh
 ./scripts/install-harness-link.sh /path/to/deepseek-harness-master
 ```
 
-This symlinks `node_modules/@open-preset-harness/dsh-tool-project-memory` → this package.
+This symlinks `node_modules/dsh-tool-project-memory` → this package.
+
+**Preferred (Profile Bundle — DSH1024 compatible):**
+
+```bash
+dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+# or from local clone:
+dsh plugin --profile headless add ./packages/tool-project-memory
+```
 
 Alternative: `npm link` (requires permission to write global `node_modules`) or pnpm `link:` override — see below.
 
@@ -83,7 +91,7 @@ Append (use **`insert`**, not a bare row — patch ids must exist or use insert)
 ```yaml
 - insert:
     - id: dsh-tool-project-memory
-      name: '@open-preset-harness/dsh-tool-project-memory/plugin'
+      name: dsh-tool-project-memory
       config:
         indexInjectMaxBytes: 4096
         recallMaxBytes: 32768
@@ -144,7 +152,7 @@ Same patch in `web` profile. Start web, pick two presets (e.g. `standard` and `c
 | Symptom | Fix |
 |---------|-----|
 | Plugin not in `--dump-config` | Patch not applied to active profile; check patch path |
-| `Cannot find package '@open-preset-harness/...'` | Re-run `npm link` / pnpm override |
+| `Cannot find package 'dsh-tool-project-memory'` | Re-run `npm link` / pnpm override / `dsh plugin add` |
 | `remember` writes nowhere | cwd has no `.git`; project root falls back to cwd — check `memory_status.project_root` |
 | Tools missing on preset | Plugin is host-plane; should appear on all presets once patch loads |
 | Plugin build type errors | Link Harness peer packages (Step 1) |
@@ -157,7 +165,7 @@ Remove the patch row, then:
 
 ```bash
 cd /path/to/deepseek-harness-master
-npm unlink @open-preset-harness/dsh-tool-project-memory
+npm unlink dsh-tool-project-memory
 ```
 
 Project memory files under `.dsh/memory/` remain — delete manually if unwanted.

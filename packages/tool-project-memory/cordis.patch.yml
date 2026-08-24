@@ -1,3 +1,4 @@
+# DSH Profile Bundle patch — auto-applied when installed via `dsh plugin add`.
 - insert:
     - id: dsh-tool-project-memory
       name: dsh-tool-project-memory
@@ -6,3 +7,5 @@
         recallMaxBytes: 32768
         rememberMaxBodyBytes: 16384
         maxDomains: 64
+        readOnly: false
+        writeDenyDomains: []
