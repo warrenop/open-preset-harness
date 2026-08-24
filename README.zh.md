@@ -5,6 +5,9 @@
 [English](README.md) | 中文
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![DSH 插件](https://img.shields.io/badge/DSH-Memory%20插件-dsh--tool--project--memory-blue)](DSH-PLUGIN.md)
+
+> **DSH Profile Bundle：** [`dsh-tool-project-memory`](packages/tool-project-memory) · 分类：**Memory** · [安装说明](README.md#install-profile-bundle--recommended) · [上架清单](packages/tool-project-memory/PUBLISH.md)
 
 > 智能体会话结束就「忘」；团队不会。  
 > **open-preset-harness** 在 [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) 之上增加 **项目级组织记忆层**：任意工种（Preset）可沉淀经验，任意工种可按需召回。
@@ -124,7 +127,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 快速开始
 
-1. [Harness 接入](docs/harness-integration.zh.md) — 或一键安装：`dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory`
+1. [Harness 接入](docs/harness-integration.zh.md) — 或一键安装：`dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory`
 2. [双 Preset Demo](docs/demo-walkthrough.zh.md) — 或 `./scripts/demo-headless.sh`（需 `DEEPSEEK_API_KEY`）
 3. 用 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml) 反馈，标 `cn-scenario` 或 `en-scenario`
 

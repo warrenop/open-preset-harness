@@ -66,7 +66,7 @@ This symlinks `node_modules/dsh-tool-project-memory` → this package.
 **Preferred (Profile Bundle — DSH1024 compatible):**
 
 ```bash
-dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
 # or from local clone:
 dsh plugin --profile headless add ./packages/tool-project-memory
 ```

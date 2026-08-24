@@ -2,7 +2,7 @@
   "name": "open-preset-harness",
   "version": "0.0.0",
   "private": true,
-  "description": "Project organizational memory for DeepSeek Harness multi-preset agents",
+  "description": "DSH Memory plugin monorepo — dsh-tool-project-memory at packages/tool-project-memory (recall, remember, memory_status across presets)",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -18,9 +18,11 @@
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
+    "memory",
     "agent",
     "preset",
     "project-memory",
-    "organizational-memory"
+    "organizational-memory",
+    "dsh-tool-project-memory"
   ]
 }

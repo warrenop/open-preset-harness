@@ -5,6 +5,9 @@
 English | [中文](README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![DSH Plugin](https://img.shields.io/badge/DSH-Memory%20plugin-dsh--tool--project--memory-blue)](DSH-PLUGIN.md)
+
+> **DSH Profile Bundle:** [`dsh-tool-project-memory`](packages/tool-project-memory) · Category: **Memory** · [Install](#install-profile-bundle--recommended) · [DSH1024 checklist](packages/tool-project-memory/PUBLISH.md)
 
 > Agents forget between sessions. Teams don't.  
 > **open-preset-harness** adds a **project-scoped organizational memory layer** on top of [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness): any role (preset) can contribute experience; any role can recall it when needed.
@@ -179,14 +182,14 @@ Priorities shift with **your Issues** — tell us your scenario.
 ### Install (Profile Bundle — recommended)
 
 ```bash
-dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
 dsh --profile web --dump-config | grep dsh-tool-project-memory
 ```
 
 Headless / CI:
 
 ```bash
-dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
 ```
 
 From a local clone:
@@ -212,7 +215,7 @@ chmod +x scripts/link-harness.sh
 |-------|-------|
 | Category | Memory |
 | Package | `dsh-tool-project-memory` |
-| Install | `dsh plugin --profile web add github:warrenop/open-preset-harness#path:packages/tool-project-memory` |
+| Install | `dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory` |
 | Listing | [DSH1024](https://deepseek1024.com/) (discovery via GitHub topic `dsh-plugin`) |
 
 ---

@@ -37,7 +37,7 @@ npm install && npm test && npm run build
 ## 步骤 2 — 安装到 Profile（推荐，DSH1024 规范）
 
 ```bash
-dsh plugin --profile headless add github:warrenop/open-preset-harness#path:packages/tool-project-memory
+dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
 # 或本地 clone：
 dsh plugin --profile headless add ./packages/tool-project-memory
 ```
