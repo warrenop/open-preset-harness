@@ -25,12 +25,11 @@ Use this before expecting [DSH1024](https://deepseek1024.com/) discovery or shar
 
 ## Prerequisites
 
-- **pnpm** — `dsh plugin` forwards to pnpm. Install once:
+- **pnpm** — install without sudo (avoids `corepack enable` EACCES on `/usr/local/bin`):
 
 ```sh
-corepack enable
-corepack prepare pnpm@latest --activate
-# or: npm install -g pnpm
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+source ~/.zshrc
 ```
 
 - **Quote the GitHub source** — the `&` in `#main&path:…` must be inside double quotes in zsh/bash.

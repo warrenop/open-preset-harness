@@ -14,12 +14,15 @@ This monorepo ships **one** installable [DSH Profile Bundle](https://deepseek-ha
 
 ## Prerequisites
 
-- **pnpm** on PATH — `dsh plugin` uses pnpm to manage profile bundles:
+- **pnpm** on PATH — `dsh plugin` uses pnpm. **Do not use `corepack enable`** if Node is in `/usr/local` (needs sudo). Install to your home directory instead:
 
 ```sh
-corepack enable
-corepack prepare pnpm@latest --activate
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+source ~/.zshrc
+pnpm --version
 ```
+
+If `curl` is unavailable: `npm install -g pnpm --prefix "$HOME/.local"` then `export PATH="$HOME/.local/bin:$PATH"`.
 
 - **Quote the source** — in zsh/bash, wrap the GitHub URL in double quotes so `&` is not treated as a background operator.
 
