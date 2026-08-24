@@ -6,5 +6,5 @@ dist/
 .env
 .env.*
 
-# Local experiment memory (use project .dsh/memory in real repos)
-.dsh/memory/local-test/
+# Local-only: timelines, marketing, internal goals (not published)
+.local/

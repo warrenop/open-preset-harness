@@ -131,48 +131,37 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-🚧 **Early experiment — testing product–market fit in CN + EN communities.**
+**v0.1.0** — DSH Memory Profile Bundle published. Early stage; feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
-| Memory API draft | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
-| File-based `.dsh/memory/` convention | ✅ Implemented in plugin core |
-| `remember` / `recall` tools plugin | ✅ [dsh-tool-project-memory](packages/tool-project-memory) (DSH Profile Bundle) |
-| Demo: two presets, one memory pool | 📝 [walkthrough](docs/demo-walkthrough.md) + [demo-project](examples/demo-project/) |
-
-Star ⭐ if you want updates. **Issues and scenario PRs are the best way to help us validate the idea.**
+| Memory API spec | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
+| `.dsh/memory/` on-disk convention | ✅ |
+| `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
+| Dual-preset demo | 📝 [walkthrough](docs/demo-walkthrough.md) + [demo-project](examples/demo-project/) |
 
 ---
 
 ## Roadmap
 
-### Phase 0 — Prove the story (weeks 1–4)
+Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
 
-- [x] Memory API draft (tools + frontmatter schema)
-- [ ] Harness plugin: inject `index.md` on blank session; `recall` / `remember` tools
-- [ ] Demo repo + 3-minute screen recording
-- [ ] Bilingual README + scenarios doc
+### Shipped (v0.1.0)
 
-### Phase 1 — Team-ready basics (months 1–3)
+- Profile Bundle install via `dsh plugin add`
+- Tools: `recall`, `remember`, `memory_status`
+- Blank-session `index.md` inject (bounded)
+- Domain-organized memory under `.dsh/memory/`
 
-- [ ] Domain taxonomy helpers + conflict / supersede rules
-- [ ] Turn-end or manual **distill** hook (session → memory, opt-in)
-- [ ] Git-friendly diff workflow for memory changes
-- [ ] Integration notes with Harness compaction + session-reference
+### Planned (when users need them)
 
-### Phase 2 — Scale retrieval (months 3–6)
+- Expanded scenario library and demo materials
+- Entry supersede / conflict metadata
+- Optional distill hook (session → memory)
+- Optional semantic search over memory
+- Domain-level write governance
 
-- [ ] Semantic search (optional local embed index)
-- [ ] Memory budget / ranking / citation in tool results
-- [ ] CLI: `oph memory status`, `oph memory search`
-
-### Phase 3 — Enterprise-shaped (demand-driven)
-
-- [ ] Write ACL by domain
-- [ ] Audit export, approval before publish
-- [ ] Hosted sync (optional SaaS — not required for OSS core)
-
-Priorities shift with **your Issues** — tell us your scenario.
+See [docs/scenarios.md](docs/scenarios.md) and [Scenario Issues](.github/ISSUE_TEMPLATE/scenario.yml) to influence priorities.
 
 ---
 

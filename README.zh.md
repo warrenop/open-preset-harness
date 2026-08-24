@@ -101,29 +101,37 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-🚧 **早期试水 — 中英文社区同步验证概念。**
+**v0.1.0** — DSH Memory Profile Bundle 已发布，欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
-| 项目记忆 API 草案 | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
-| 文件约定 `.dsh/memory/` | ✅ 插件 core 已实现 |
-| `remember` / `recall` 插件 | ✅ [dsh-tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
+| 项目记忆 API 规范 | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
+| 文件约定 `.dsh/memory/` | ✅ |
+| `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
 | 双 Preset Demo | 📝 [walkthrough](docs/demo-walkthrough.zh.md) + [demo-project](examples/demo-project/) |
 
 ---
 
 ## Roadmap
 
-### Phase 0（第 1–4 周）
+按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
 
-- [x] Memory API 草案
-- [ ] Harness 插件实现
-- [ ] Demo 录屏
-- [ ] 场景库扩充
+### 已发布（v0.1.0）
 
-### Phase 1–3
+- Profile Bundle 一键安装
+- 工具：`recall`、`remember`、`memory_status`
+- 空白 session 注入 `index.md`（有字节上限）
+- 按领域组织的 `.dsh/memory/`
 
-与 [README.md](README.md) 英文版 Roadmap 一致。
+### 计划能力（有需求再做）
+
+- 场景库与 Demo 材料扩充
+- 条目 supersede / 冲突元数据
+- 可选：session → memory 蒸馏 hook
+- 可选：记忆语义检索
+- 按领域的写入治理
+
+见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
 
 ---
 
@@ -131,9 +139,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 1. [Harness 接入](docs/harness-integration.zh.md) — 或一键安装：`dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"`
 2. [双 Preset Demo](docs/demo-walkthrough.zh.md) — 或 `./scripts/demo-headless.sh`（需 `DEEPSEEK_API_KEY`）
-3. 用 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml) 反馈，标 `cn-scenario` 或 `en-scenario`
-
-首发稿大纲：[docs/launch-post.zh.md](docs/launch-post.zh.md)
+3. 用 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml) 反馈真实场景
 
 ```bash
 chmod +x scripts/link-harness.sh
@@ -146,7 +152,7 @@ chmod +x scripts/link-harness.sh
 
 见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-Issue 请标注 `[cn-scenario]` 或 `[en-scenario]`，便于统计市场信号。
+Issue 欢迎描述「Preset A 写入 → Preset B 召回」类场景；可选标签 `cn-scenario` / `en-scenario`。
 
 ---
 

@@ -32,9 +32,9 @@ Phase 0 是 **文件型、按领域组织、Git 可 review** 的项目记忆，�
 
 **无。** DSH1024 / 本仓库均无 AI 代码占比门槛。建议对权限与写盘路径做人工审阅。
 
-## Phase 0 之后有什么？
+## 之后可能增加什么？
 
-见根 README Roadmap：语义搜索、domain ACL、CLI `oph memory` 等（需求驱动）。
+按社区需求迭代，见 README **Roadmap**（仅列能力方向，无时间表）：可选语义检索、domain 写入治理、distill hook 等。
 
 ## 如何反馈场景？
 
