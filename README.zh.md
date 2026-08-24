@@ -127,7 +127,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 快速开始
 
-1. [Harness 接入](docs/harness-integration.zh.md) — 或一键安装：`dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory`
+1. [Harness 接入](docs/harness-integration.zh.md) — 或一键安装：`dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"`
 2. [双 Preset Demo](docs/demo-walkthrough.zh.md) — 或 `./scripts/demo-headless.sh`（需 `DEEPSEEK_API_KEY`）
 3. 用 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml) 反馈，标 `cn-scenario` 或 `en-scenario`
 

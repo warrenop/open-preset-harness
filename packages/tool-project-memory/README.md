@@ -12,10 +12,10 @@ Recommended — installs the bundle patch into your profile automatically:
 
 ```sh
 # Interactive web profile
-dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 
 # Headless / automation profile
-dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile headless add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 ```
 
 From a local clone:
@@ -95,7 +95,7 @@ Link against a local Harness checkout — see [docs/harness-integration.md](../.
 ### 安装
 
 ```sh
-dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 ```
 
 ### DSH1024 上架

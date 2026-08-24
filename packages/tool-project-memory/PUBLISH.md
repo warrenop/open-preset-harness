@@ -23,11 +23,23 @@ Use this before expecting [DSH1024](https://deepseek1024.com/) discovery or shar
 - [x] MIT `LICENSE`, install + permissions in README
 - [x] GitHub topic: `dsh-plugin`
 
+## Prerequisites
+
+- **pnpm** — `dsh plugin` forwards to pnpm. Install once:
+
+```sh
+corepack enable
+corepack prepare pnpm@latest --activate
+# or: npm install -g pnpm
+```
+
+- **Quote the GitHub source** — the `&` in `#main&path:…` must be inside double quotes in zsh/bash.
+
 ## Install (canonical monorepo source)
 
 ```sh
-dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
-dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
+dsh plugin --profile headless add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 ```
 
 Local checkout:

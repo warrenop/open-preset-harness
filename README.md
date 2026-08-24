@@ -182,14 +182,14 @@ Priorities shift with **your Issues** — tell us your scenario.
 ### Install (Profile Bundle — recommended)
 
 ```bash
-dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 dsh --profile web --dump-config | grep dsh-tool-project-memory
 ```
 
 Headless / CI:
 
 ```bash
-dsh plugin --profile headless add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory
+dsh plugin --profile headless add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"
 ```
 
 From a local clone:
@@ -215,7 +215,7 @@ chmod +x scripts/link-harness.sh
 |-------|-------|
 | Category | Memory |
 | Package | `dsh-tool-project-memory` |
-| Install | `dsh plugin --profile web add github:warrenop/open-preset-harness#main&path:packages/tool-project-memory` |
+| Install | `dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:packages/tool-project-memory"` |
 | Listing | [DSH1024](https://deepseek1024.com/) (discovery via GitHub topic `dsh-plugin`) |
 
 ---
