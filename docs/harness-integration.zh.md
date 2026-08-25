@@ -73,6 +73,20 @@ pnpm dsh --profile headless --dump-config | rg tool-project-memory
 
 ---
 
+## 快速冒烟（无需 LLM）
+
+在 **open-preset-harness** 仓库根目录：
+
+```bash
+chmod +x scripts/smoke.sh
+./scripts/smoke.sh                  # 核心：build、test、插件导出
+./scripts/smoke.sh --with-harness   # 额外：link Harness + dump-config 检查
+```
+
+CI 在每次 push/PR 跑核心 smoke。完整 Harness 集成 smoke 需本地 Harness checkout（同级 `../deepseek-harness-master` 或 `--harness PATH`）。
+
+---
+
 ## 步骤 4 — 在 git 项目里冒烟
 
 ```bash

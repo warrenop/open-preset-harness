@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: packages/tool-project-memory/package-lock.json
+
+      - name: Core smoke (build, test, plugin export)
+        run: chmod +x scripts/smoke.sh && ./scripts/smoke.sh

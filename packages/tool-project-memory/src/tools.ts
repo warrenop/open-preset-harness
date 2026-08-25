@@ -1,15 +1,27 @@
 import type { Context } from '@deepseek-ai/cordis'
 import { defineTool } from '@deepseek-ai/dsh-tools'
+import type { JsonValue } from '@deepseek-ai/dsh-session'
 import type { Agent } from '@deepseek-ai/dsh-agent'
 import { prepareIndexInject, projectMemoryIndexSource } from './inject-index.ts'
+import {
+  recallPresentationMeta,
+  recallPresentResult,
+  rememberPresentationMeta,
+  rememberPresentResult,
+} from './presentation.ts'
 import { memoryStatus, recallEntries } from './recall.ts'
 import { rememberEntry } from './remember.ts'
-import type { ProjectMemoryConfig, RecallInput, RememberInput } from './types.ts'
+import type { ProjectMemoryConfig, RecallInput, RecallOutput, RememberInput, RememberOutput } from './types.ts'
 import { MemoryError } from './types.ts'
 
 /** Deep-clone tool outputs so readonly arrays satisfy defineTool JSON schema types. */
 function toolJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T
+}
+
+/** Clone presentation metadata for session-log persistence. */
+function presentationJson(value: unknown): JsonValue {
+  return JSON.parse(JSON.stringify(value)) as JsonValue
 }
 
 /** Resolve session cwd from agent header or fallback. */
@@ -78,8 +90,16 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
         type: 'text',
         text: value.entries.length === 0
           ? 'No matching project memory entries.'
-          : `Recalled ${value.entries.length} project memory entr${value.entries.length === 1 ? 'y' : 'ies'}.`,
+          : (() => {
+            const expired = value.entries.filter(e => e.expired).length
+            const base = `Recalled ${value.entries.length} project memory entr${value.entries.length === 1 ? 'y' : 'ies'}.`
+            return expired > 0
+              ? `${base} ${expired} expired — verify before relying on them.`
+              : base
+          })(),
       }],
+      presentationMeta: (_args, value) =>
+        presentationJson(recallPresentationMeta(_args, value as unknown as RecallOutput)),
     },
     async execute(args, exec) {
       if (!exec.agent) throw new Error('recall requires an owning agent session')
@@ -100,10 +120,11 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
     },
     presentCall: args => ({
       card: 'generic',
-      title: 'Recall project memory',
+      title: args.domain ? `Recall · ${args.domain}` : 'Recall project memory',
       kind: 'search',
-      rawInput: args,
+      rawInput: args.query ? { query: args.query, domain: args.domain } : { domain: args.domain },
     }),
+    presentResult: recallPresentResult,
   }))
 
   ctx.tools.register(defineTool({
@@ -134,6 +155,10 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
         type: 'string',
         description: 'Filename slug when kind=decision.',
       },
+      expires_at: {
+        type: 'string',
+        description: 'Optional ISO 8601 UTC expiry; recall marks entry expired when past.',
+      },
     },
     output: {
       schema: {
@@ -154,6 +179,8 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
         type: 'text',
         text: `Remembered ${value.entry_kind} ${value.id} in domain ${value.domain} (${value.path}).`,
       }],
+      presentationMeta: (_args, value) =>
+        presentationJson(rememberPresentationMeta(_args, value as unknown as RememberOutput)),
     },
     async execute(args, exec) {
       if (!exec.agent) throw new Error('remember requires an owning agent session')
@@ -169,6 +196,7 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
           sensitivity: args.sensitivity as RememberInput['sensitivity'],
           decision_status: args.decision_status as RememberInput['decision_status'],
           decision_slug: args.decision_slug,
+          expires_at: args.expires_at,
         }
         return await rememberEntry(
           sessionCwd(exec.agent),
@@ -184,10 +212,11 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
     },
     presentCall: args => ({
       card: 'generic',
-      title: 'Remember project fact',
+      title: `Remember · ${args.domain}`,
       kind: 'other',
       rawInput: { domain: args.domain, kind: args.kind, summary: args.summary },
     }),
+    presentResult: rememberPresentResult,
   }))
 
   ctx.tools.register(defineTool({

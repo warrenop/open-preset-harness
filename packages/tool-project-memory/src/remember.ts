@@ -72,6 +72,7 @@ export async function rememberEntry(
       turn: source.turn,
     },
     ...(input.supersedes ? { supersedes: input.supersedes } : {}),
+    ...(input.expires_at ? { expires_at: input.expires_at } : {}),
     ...(input.kind === 'decision'
       ? {
           decision: {

@@ -108,7 +108,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 | 项目记忆 API 规范 | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
 | 文件约定 `.dsh/memory/` | ✅ |
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
-| 双 Preset Demo | 📝 [walkthrough](docs/demo-walkthrough.zh.md) + [demo-project](examples/demo-project/) |
+| 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
 
 ---
 

@@ -79,6 +79,9 @@ export function validateRememberInput(input: RememberInput, rememberMaxBodyBytes
   if (input.supersedes && !/^mem-\d{8}-[a-f0-9]{6}$/.test(input.supersedes)) {
     throw new MemoryError('VALIDATION_FAILED', `invalid supersedes id: ${JSON.stringify(input.supersedes)}`)
   }
+  if (input.expires_at !== undefined) {
+    validateExpiresAt(input.expires_at)
+  }
 }
 
 /** @param kind - memory kind. */
@@ -103,6 +106,14 @@ function validateSensitivity(s: string): asserts s is Sensitivity {
 function validateDecisionStatus(s: string): asserts s is DecisionStatus {
   if (s !== 'proposed' && s !== 'accepted' && s !== 'deprecated') {
     throw new MemoryError('VALIDATION_FAILED', 'invalid decision_status')
+  }
+}
+
+/** @param expiresAt - ISO 8601 timestamp for optional entry expiry. */
+export function validateExpiresAt(expiresAt: string): void {
+  const t = Date.parse(expiresAt)
+  if (Number.isNaN(t)) {
+    throw new MemoryError('VALIDATION_FAILED', `invalid expires_at: ${JSON.stringify(expiresAt)}`)
   }
 }
 
@@ -159,4 +170,16 @@ export function truncateUtf8(text: string, maxBytes: number): string {
     else hi = mid - 1
   }
   return text.slice(0, lo)
+}
+
+/**
+ * Whether a memory entry's optional expires_at is in the past.
+ * @param expiresAt - ISO 8601 timestamp from frontmatter.
+ * @param now - comparison instant (defaults to current time).
+ */
+export function isEntryExpired(expiresAt: string | undefined, now: Date = new Date()): boolean {
+  if (!expiresAt) return false
+  const t = Date.parse(expiresAt)
+  if (Number.isNaN(t)) return false
+  return t < now.getTime()
 }

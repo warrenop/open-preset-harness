@@ -55,6 +55,10 @@ export interface RecallEntry {
   readonly tags: readonly string[]
   readonly sensitivity: Sensitivity
   readonly superseded_by?: string
+  /** Present when frontmatter expires_at is set. */
+  readonly expires_at?: string
+  /** True when expires_at is in the past — verify before relying on the entry. */
+  readonly expired?: true
   readonly excerpt: string
 }
 
@@ -143,6 +147,8 @@ export interface RememberInput {
   readonly sensitivity?: Sensitivity
   readonly decision_status?: DecisionStatus
   readonly decision_slug?: string
+  /** Optional ISO 8601 UTC expiry; recall sets expired when past. */
+  readonly expires_at?: string
 }
 
 export interface RecallInput {

@@ -23,7 +23,9 @@
 | `kind` | `fact` \| `decision` \| `any` |
 | `limit` | 1–20，默认 5 |
 
-**输出：** `recall-result`，含 `entries[]`（id、summary、path、excerpt 等）。
+**输出：** `recall-result`，含 `entries[]`（id、summary、path、excerpt、`expires_at`、`expired` 等）。
+
+UI：`presentationMeta` 持久化 entry id 与 domain，完成态卡片标题如 `mem-… · security`。
 
 ## remember
 
@@ -40,6 +42,7 @@
 | `tags` | 最多 8 个 |
 | `confidence` | `low` \| `medium` \| `high` |
 | `supersedes` | 被替换的旧 entry id |
+| `expires_at` | 可选 ISO 8601 UTC 过期时间 |
 
 **写入位置：**
 

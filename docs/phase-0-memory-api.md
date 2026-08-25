@@ -1,6 +1,6 @@
 # Phase 0: Project Memory API
 
-**Status:** Draft · **Schema version:** `oph-memory-schema: 1`  
+**Status:** Implemented (v0.1.0) · **Schema version:** `oph-memory-schema: 1`  
 English | [中文](#中文)
 
 This document is the implementation contract for the first plugin package: `dsh-tool-project-memory`.
@@ -250,6 +250,8 @@ interface RecallEntry {
   tags: string[]
   sensitivity: 'public' | 'internal' | 'restricted'
   superseded_by?: string     // if include_superseded false, omitted entries excluded entirely
+  expires_at?: string        // echoed from frontmatter when set
+  expired?: true             // when expires_at is in the past — verify before relying
   excerpt: string            // body excerpt, budget-limited
 }
 ```
@@ -297,6 +299,7 @@ Prefer one clear fact per call. Choose the correct domain.
 | `confidence` | string | no | `low` \| `medium` \| `high`. Default: `medium` |
 | `supersedes` | string | no | Entry id this replaces |
 | `sensitivity` | string | no | `public` \| `internal` \| `restricted`. Default: `internal` |
+| `expires_at` | string | no | ISO 8601 UTC expiry; `recall` sets `expired` when past |
 | `decision_status` | string | conditional | Required when kind=decision: `proposed` \| `accepted` \| `deprecated` |
 | `decision_slug` | string | conditional | Required when kind=decision: slug for filename |
 
@@ -411,7 +414,13 @@ Same digest → skip re-inject on compatible resume (mirror agent-instructions p
 
 ### 5.2 Tool results
 
-Normal `tool/result` events. No special casing beyond optional `presentationMeta` showing entry id and domain in UI card.
+Normal `tool/result` events. Tools set `output.presentationMeta` (entry id + domain) for session-log replay; `presentResult` renders completed UI cards from that metadata.
+
+| Tool | `presentationMeta` | Completed card title (example) |
+|------|----------------------|------------------------------|
+| `recall` | `entries[]` with `id`, `domain`, optional `expired` | `mem-… · security` or `3 entries · security, api` |
+| `remember` | `id`, `domain`, `path`, `entry_kind` | `mem-… · security` |
+| `memory_status` | — | generic fallback |
 
 ---
 
@@ -475,8 +484,10 @@ Normal `tool/result` events. No special casing beyond optional `presentationMeta
 - [x] Index generator
 - [x] Blank-session inject hook (`agent/pre-step`)
 - [x] Unit tests (core — run `npm test` in package)
-- [ ] Fixture repo with two presets demo
-- [ ] Harness integration smoke with linked peer deps
+- [x] Harness integration smoke (`scripts/smoke.sh`, CI core job; `--with-harness` for local full check)
+- [x] `remember` `expires_at` + recall `expired` warn
+- [x] Tool `presentationMeta` + `presentResult` UI cards (id + domain)
+- [ ] Fixture repo with two presets demo *(deferred — [#3](https://github.com/warrenop/open-preset-harness/issues/3))*
 
 ---
 
@@ -520,4 +531,6 @@ Normal `tool/result` events. No special casing beyond optional `presentationMeta
 
 | Date | Change |
 |------|--------|
+| 2026-08-25 | remember `expires_at`; recall `expired`; presentationMeta UI cards |
+| 2026-08-25 | recall: `expired` flag when `expires_at` is past; Harness smoke + CI |
 | 2026-08-18 | Initial Phase 0 draft |

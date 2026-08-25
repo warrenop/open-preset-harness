@@ -138,7 +138,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | Memory API spec | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
-| Dual-preset demo | 📝 [walkthrough](docs/demo-walkthrough.md) + [demo-project](examples/demo-project/) |
+| Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
 

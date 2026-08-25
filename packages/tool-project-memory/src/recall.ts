@@ -13,7 +13,7 @@ import type {
   RecallOutput,
 } from './types.ts'
 import { DEFAULT_CONFIG, MemoryError, OPH_MEMORY_SCHEMA } from './types.ts'
-import { normalizeRecallLimit, scoreEntry, truncateUtf8 } from './validate.ts'
+import { normalizeRecallLimit, scoreEntry, truncateUtf8, isEntryExpired } from './validate.ts'
 
 /**
  * Search project memory.
@@ -105,6 +105,8 @@ export async function recallEntries(
       tags: fm.tags ?? [],
       sensitivity: fm.sensitivity ?? 'internal',
       ...(supersededBy.has(fm.id) ? { superseded_by: supersededBy.get(fm.id) } : {}),
+      ...(fm.expires_at ? { expires_at: fm.expires_at } : {}),
+      ...(isEntryExpired(fm.expires_at) ? { expired: true as const } : {}),
       excerpt,
     }
     const itemBytes = Buffer.byteLength(JSON.stringify(item), 'utf8')

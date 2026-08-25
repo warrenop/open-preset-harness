@@ -110,6 +110,20 @@ pnpm dsh --profile headless --dump-config | rg tool-project-memory
 
 ---
 
+## Quick smoke (no LLM)
+
+From the **open-preset-harness** repo root:
+
+```bash
+chmod +x scripts/smoke.sh
+./scripts/smoke.sh                  # core: build, test, plugin export
+./scripts/smoke.sh --with-harness   # + link Harness + dump-config patch check
+```
+
+CI runs the core smoke on every push/PR. Full Harness integration smoke requires a local Harness checkout (sibling `../deepseek-harness-master` or `--harness PATH`).
+
+---
+
 ## Step 4 — Smoke test in a git project
 
 ```bash

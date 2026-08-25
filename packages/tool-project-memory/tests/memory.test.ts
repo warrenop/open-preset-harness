@@ -86,6 +86,56 @@ describe('remember and recall', () => {
     expect(out.entries[0]?.domain).toBe('api')
   })
 
+  it('flags expired entries on recall', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+    const paths = await resolveMemoryPaths(root, config)
+    const fm: MemoryEntryFrontmatter = {
+      'oph-memory-schema': 1,
+      id: 'mem-20260818-dead00',
+      kind: 'fact',
+      domain: 'security',
+      created_at: '2026-08-18T06:00:00.000Z',
+      summary: 'Temporary audit exception for legacy admin routes',
+      confidence: 'low',
+      expires_at: '2026-08-01T00:00:00.000Z',
+      source: { session_id: 'sess-expired' },
+    }
+    await appendDomainBlock(paths, 'security', serializeEntryBlock(fm, 'Expired exception details.', true))
+    await writeIndex(paths, generateIndex(paths, await loadAllEntries(paths)))
+
+    const out = await recallEntries(root, config, { domain: 'security' })
+    expect(out.entries).toHaveLength(1)
+    expect(out.entries[0]?.expires_at).toBe('2026-08-01T00:00:00.000Z')
+    expect(out.entries[0]?.expired).toBe(true)
+  })
+
+  it('persists expires_at from remember and recalls without expired when future', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+    const fixed = new Date('2026-08-18T06:00:00.000Z')
+
+    await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Temporary waiver for legacy admin routes during migration',
+        body: 'Remove after migration completes.',
+        expires_at: '2027-08-18T00:00:00.000Z',
+      },
+      { session_id: 'sess-future-expiry' },
+      fixed,
+    )
+
+    const out = await recallEntries(root, config, { domain: 'security' })
+    expect(out.entries[0]?.expires_at).toBe('2027-08-18T00:00:00.000Z')
+    expect(out.entries[0]?.expired).toBeUndefined()
+  })
+
   it('writes decision files under decisions/', async () => {
     const { root, cleanup: c } = await makeProject()
     cleanup = c

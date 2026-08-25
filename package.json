@@ -9,7 +9,10 @@
     "doc:check": "node -e \"console.log('Docs + packages monorepo.')\"",
     "test": "pnpm -r test",
     "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "check": "npm run check --prefix packages/tool-project-memory",
+    "smoke": "bash scripts/smoke.sh",
+    "smoke:harness": "bash scripts/smoke.sh --with-harness"
   },
   "repository": {
     "type": "git",

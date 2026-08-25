@@ -52,8 +52,9 @@ Before changing tool names, parameters, or frontmatter fields:
 1. Fork → branch → PR
 2. Match Harness conventions: Cordis plugins, ESM, **model-visible ⟺ logged**
 3. Memory writes go through `remember` or approved hooks — do not bypass the session log
-4. Run tests documented in the PR
-5. Update README if user-visible behavior changes
+4. Run `./scripts/smoke.sh` before opening a PR (CI runs the same core checks)
+5. With a local Harness checkout: `./scripts/smoke.sh --with-harness`
+6. Update README if user-visible behavior changes
 
 ---
 

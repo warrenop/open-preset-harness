@@ -11,3 +11,5 @@
 **Permissions:** read/write only `<projectRoot>/.dsh/memory/`; no network.
 
 Config defaults: `indexInjectMaxBytes: 4096`, `recallMaxBytes: 32768`, `rememberMaxBodyBytes: 16384`.
+
+`recall` / `remember` set `output.presentationMeta` (entry id + domain) for UI replay; see spec §5.2.
