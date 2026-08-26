@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.6.0** — Phase 3 写入 ACL 已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v0.7.0** — Phase 2b 向量 sidecar recall 已发布；更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -117,6 +117,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.7.0）
+
+- 向量 sidecar（Phase 2b）：`vectorSidecar` + `recall` `ranking: 'vector'`（local-fhash-v1，无网络）
 
 ### 已发布（v0.6.0）
 

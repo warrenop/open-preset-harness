@@ -26,7 +26,7 @@ Phase 0 `recall` scoring is substring match on the full query string (`summary.i
 
 ## 7. Tier 2b (vector sidecar)
 
-**Status:** Implemented locally · **Tracking:** [#9](https://github.com/warrenop/open-preset-harness/issues/9) · **Target:** v0.7.0
+**Status:** Implemented (v0.7.0) · **Tracking:** [#9](https://github.com/warrenop/open-preset-harness/issues/9)
 
 | Topic | Decision |
 |-------|----------|

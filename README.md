@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.6.0** — Phase 3 domain/preset write ACL shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v0.7.0** — Phase 2b vector sidecar recall shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -149,6 +149,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.7.0)
+
+- Vector sidecar (Phase 2b): `vectorSidecar` + `recall` `ranking: 'vector'` (local-fhash-v1, no network)
 
 ### Shipped (v0.6.0)
 
