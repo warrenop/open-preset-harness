@@ -126,7 +126,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 条目 supersede / 冲突元数据
+- 条目 supersede / 冲突元数据 — [phase-1-supersede.md](docs/phase-1-supersede.md)
 - 可选：session → memory 蒸馏 hook
 - 可选：记忆语义检索
 - 按领域的写入治理

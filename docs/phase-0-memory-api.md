@@ -325,7 +325,7 @@ interface RememberOutput {
 3. Generate `id` and `created_at`; fill `source` from current agent/session
 4. `kind=fact` → append block to `domains/<domain>.md` (create file if needed)
 5. `kind=decision` → write `decisions/YYYY-MM-<decision_slug>.md`
-6. If `supersedes` set: validate target exists; optionally mark old entry in metadata file (Phase 1 — Phase 0 relies on recall filter)
+6. If `supersedes` set: validate target exists; **Phase 1** back-patches old entry — see [phase-1-supersede.md](phase-1-supersede.md)
 7. Regenerate `index.md`
 8. Return paths and id
 

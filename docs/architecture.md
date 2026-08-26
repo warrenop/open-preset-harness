@@ -92,7 +92,7 @@ Optional Phase 1: distill hook after turn/compaction (opt-in, deployment config)
 | Phase | Write model |
 |-------|-------------|
 | 0 | Any preset with `remember` tool can write; git diff is the review layer |
-| 1 | `supersedes` frontmatter + domain helpers |
+| 1 | `supersedes` frontmatter + domain helpers — [phase-1-supersede.md](phase-1-supersede.md) |
 | 3 | Domain ACL, approval gate for sensitive domains |
 
 ---

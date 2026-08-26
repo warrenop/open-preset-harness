@@ -156,7 +156,7 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 ### Planned (when users need them)
 
 - Expanded scenario library and demo materials
-- Entry supersede / conflict metadata
+- Entry supersede / conflict metadata — [phase-1-supersede.md](docs/phase-1-supersede.md)
 - Optional distill hook (session → memory)
 - Optional semantic search over memory
 - Domain-level write governance
