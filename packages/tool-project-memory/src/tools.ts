@@ -3,6 +3,7 @@ import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { JsonValue } from '@deepseek-ai/dsh-session'
 import type { Agent } from '@deepseek-ai/dsh-agent'
 import { prepareIndexInject, projectMemoryIndexSource } from './inject-index.ts'
+import type { SessionLogEvent } from './distill-reminder.ts'
 import {
   recallPresentationMeta,
   recallPresentResult,
@@ -11,8 +12,9 @@ import {
 } from './presentation.ts'
 import { memoryStatus, recallEntries } from './recall.ts'
 import { rememberEntry } from './remember.ts'
+import { suggestMemoryCandidatesForSession } from './suggest-memory-candidates.ts'
 import type { ProjectMemoryConfig, RecallInput, RecallOutput, RememberInput, RememberOutput } from './types.ts'
-import { MemoryError } from './types.ts'
+import { DEFAULT_CONFIG, MemoryError } from './types.ts'
 
 /** Deep-clone tool outputs so readonly arrays satisfy defineTool JSON schema types. */
 function toolJson<T>(value: T): T {
@@ -47,6 +49,7 @@ function rememberSource(agent: Agent): {
  * @param config - deployment config.
  */
 export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): void {
+  const merged = { ...DEFAULT_CONFIG, ...config }
   ctx.tools.register(defineTool({
     name: 'recall',
     description:
@@ -256,6 +259,56 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
     },
     presentCall: () => ({ card: 'generic', title: 'Project memory status', kind: 'search' }),
   }))
+
+  if (merged.distillAssist) {
+    ctx.tools.register(defineTool({
+      name: 'suggest_memory_candidates',
+      description:
+        'Heuristic scan of the current session log for durable facts/decisions worth remembering. '
+        + 'Returns suggestions only — call `remember` explicitly to persist. No auto-write.',
+      parameters: {
+        since_turn: {
+          type: 'integer',
+          description: 'Only consider events from this turn onward. Default: last 5 turns.',
+        },
+        max_candidates: {
+          type: 'integer',
+          description: 'Max suggestions 1–10. Default: 5.',
+        },
+      },
+      output: {
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            kind: { type: 'string', required: true, enum: ['memory-candidates'] },
+            candidates: { type: 'array', required: true, items: { type: 'object', additionalProperties: true } },
+            omitted_count: { type: 'integer', required: true },
+            truncated: { type: 'boolean', required: true },
+            session_event_count: { type: 'integer', required: true },
+            since_turn: { type: 'integer', required: true },
+          },
+        },
+        render: (_args, value) => [{
+          type: 'text',
+          text: value.candidates.length === 0
+            ? 'No memory candidates found in recent session log.'
+            : `Found ${value.candidates.length} candidate${value.candidates.length === 1 ? '' : 's'} — review and call remember for each worth keeping.`,
+        }],
+      },
+      async execute(args, exec) {
+        if (!exec.agent) throw new Error('suggest_memory_candidates requires an owning agent session')
+        const events = exec.agent.session.events as unknown as SessionLogEvent[]
+        return toolJson(await suggestMemoryCandidatesForSession(
+          sessionCwd(exec.agent),
+          merged,
+          events,
+          { since_turn: args.since_turn, max_candidates: args.max_candidates },
+        )) as never
+      },
+      presentCall: () => ({ card: 'generic', title: 'Suggest memory candidates', kind: 'search' }),
+    }))
+  }
 }
 
 /** Track per-agent index inject to avoid duplicate baseline. */

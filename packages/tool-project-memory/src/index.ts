@@ -13,6 +13,11 @@ export type {
   MemoryEntry,
   MemoryErrorCode,
 } from './types.ts'
+export type {
+  MemoryCandidate,
+  SuggestMemoryCandidatesInput,
+  SuggestMemoryCandidatesOutput,
+} from './suggest-memory-candidates.ts'
 export { DEFAULT_CONFIG, MemoryError, OPH_MEMORY_SCHEMA } from './types.ts'
 export { recallEntries, memoryStatus } from './recall.ts'
 export { rememberEntry, isMemoryInitialized } from './remember.ts'
@@ -29,6 +34,10 @@ export {
 } from './distill-reminder.ts'
 export type { DistillReminderPayload, SessionLogEvent } from './distill-reminder.ts'
 export { generateIndex } from './index-generator.ts'
+export {
+  suggestMemoryCandidates,
+  suggestMemoryCandidatesForSession,
+} from './suggest-memory-candidates.ts'
 export { resolveMemoryPaths, resolveProjectRoot } from './project-root.ts'
 export { loadAllEntries, parseDomainFile } from './memory-store.ts'
 export { parseEntryFrontmatter, serializeEntryBlock, generateEntryId } from './frontmatter.ts'

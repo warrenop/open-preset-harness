@@ -31,6 +31,9 @@ export function apply(ctx: Context, config: Config): void {
     || (merged.distillReminderMinTurn ?? DEFAULT_CONFIG.distillReminderMinTurn!) < 1) {
     throw new Error('distillReminderMaxBytes must be positive and distillReminderMinTurn >= 1')
   }
+  if ((merged.distillAssistMaxBytes ?? DEFAULT_CONFIG.distillAssistMaxBytes!) <= 0) {
+    throw new Error('distillAssistMaxBytes must be a positive integer')
+  }
   registerMemoryTools(ctx, merged)
   installIndexInject(ctx, merged)
   installDistillReminder(ctx, merged)

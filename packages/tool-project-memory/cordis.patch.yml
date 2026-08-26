@@ -13,3 +13,5 @@
         distillReminderMaxBytes: 2048
         distillReminderMinTurn: 2
         distillCompactionReminder: false
+        distillAssist: false
+        distillAssistMaxBytes: 8192

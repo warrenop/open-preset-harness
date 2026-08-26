@@ -198,6 +198,10 @@ export interface ProjectMemoryConfig {
   readonly distillReminderMinTurn?: number
   /** Tier 1b: inject after successful compaction/end. Default: false */
   readonly distillCompactionReminder?: boolean
+  /** Tier 2: register suggest_memory_candidates tool. Default: false */
+  readonly distillAssist?: boolean
+  /** Max UTF-8 bytes for suggest_memory_candidates output. Default: 8192 */
+  readonly distillAssistMaxBytes?: number
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -212,4 +216,6 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   distillReminderMaxBytes: 2048,
   distillReminderMinTurn: 2,
   distillCompactionReminder: false,
+  distillAssist: false,
+  distillAssistMaxBytes: 8192,
 }
