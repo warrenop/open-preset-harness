@@ -173,6 +173,8 @@ export interface RecallInput {
   readonly kind?: MemoryKind | 'any'
   readonly limit?: number
   readonly include_superseded?: boolean
+  /** Ranking mode when query is set. Default from config (`token`). */
+  readonly ranking?: 'token' | 'legacy'
 }
 
 export interface RememberSource {
@@ -202,6 +204,8 @@ export interface ProjectMemoryConfig {
   readonly distillAssist?: boolean
   /** Max UTF-8 bytes for suggest_memory_candidates output. Default: 8192 */
   readonly distillAssistMaxBytes?: number
+  /** Recall ranking when query is set. Default: token (Phase 2a). */
+  readonly recallRanking?: 'token' | 'legacy'
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -218,4 +222,5 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   distillCompactionReminder: false,
   distillAssist: false,
   distillAssistMaxBytes: 8192,
+  recallRanking: 'token',
 }

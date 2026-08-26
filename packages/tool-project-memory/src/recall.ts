@@ -14,7 +14,13 @@ import type {
   RecallOutput,
 } from './types.ts'
 import { DEFAULT_CONFIG, MemoryError, OPH_MEMORY_SCHEMA } from './types.ts'
-import { normalizeRecallLimit, scoreEntry, truncateUtf8, isEntryExpired } from './validate.ts'
+import { normalizeRecallLimit, truncateUtf8, isEntryExpired } from './validate.ts'
+import {
+  buildIdfMap,
+  scoreEntryLegacy,
+  scoreEntryRanked,
+  tokenizeForRecall,
+} from './recall-ranking.ts'
 
 /**
  * Search project memory.
@@ -62,15 +68,39 @@ export async function recallEntries(
   type Scored = { entry: MemoryEntry; score: number }
   let scored: Scored[]
   if (query.length > 0) {
-    scored = entries.map(entry => ({
-      entry,
-      score: scoreEntry(
-        query,
-        entry.frontmatter.summary,
-        entry.frontmatter.tags ?? [],
-        entry.body,
-      ),
-    }))
+    const ranking = input.ranking ?? merged.recallRanking ?? DEFAULT_CONFIG.recallRanking!
+    if (ranking === 'legacy') {
+      scored = entries.map(entry => ({
+        entry,
+        score: scoreEntryLegacy(
+          query,
+          entry.frontmatter.summary,
+          entry.frontmatter.tags ?? [],
+          entry.body,
+        ),
+      }))
+    }
+    else {
+      const queryTerms = tokenizeForRecall(query)
+      const queryRaw = query.toLowerCase()
+      const docTokens = entries.map(e => [
+        ...tokenizeForRecall(e.frontmatter.summary),
+        ...e.frontmatter.tags?.flatMap(t => tokenizeForRecall(t)) ?? [],
+        ...tokenizeForRecall(e.body),
+      ])
+      const idf = buildIdfMap(docTokens)
+      scored = entries.map(entry => ({
+        entry,
+        score: scoreEntryRanked(
+          queryTerms,
+          queryRaw,
+          idf,
+          entry.frontmatter.summary,
+          entry.frontmatter.tags ?? [],
+          entry.body,
+        ),
+      }))
+    }
     scored = scored.filter(s => s.score > 0)
     scored.sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score

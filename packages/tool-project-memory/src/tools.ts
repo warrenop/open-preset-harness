@@ -69,6 +69,11 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
         type: 'boolean',
         description: 'Include entries superseded by newer ids. Default: false.',
       },
+      ranking: {
+        type: 'string',
+        enum: ['token', 'legacy'],
+        description: 'Query ranking mode. Default: token (Phase 2a IDF); legacy restores Phase 0 substring scoring.',
+      },
     },
     output: {
       schema: {
@@ -113,6 +118,7 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
           kind: args.kind as RecallInput['kind'],
           limit: args.limit,
           include_superseded: args.include_superseded,
+          ranking: args.ranking as RecallInput['ranking'],
         }
         return toolJson(await recallEntries(sessionCwd(exec.agent), config, input)) as never
       }

@@ -41,3 +41,9 @@ export {
 export { resolveMemoryPaths, resolveProjectRoot } from './project-root.ts'
 export { loadAllEntries, parseDomainFile } from './memory-store.ts'
 export { parseEntryFrontmatter, serializeEntryBlock, generateEntryId } from './frontmatter.ts'
+export {
+  tokenizeForRecall,
+  buildIdfMap,
+  scoreEntryRanked,
+  scoreEntryLegacy,
+} from './recall-ranking.ts'

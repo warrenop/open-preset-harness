@@ -10,6 +10,7 @@ import {
   TAG_PATTERN,
   MAX_TAGS,
 } from './constants.ts'
+import { scoreEntryLegacy } from './recall-ranking.ts'
 import type {
   Confidence,
   DecisionStatus,
@@ -145,14 +146,7 @@ export function scoreEntry(
   tags: readonly string[],
   body: string,
 ): number {
-  const q = query.toLowerCase()
-  let score = 0
-  const s = summary.toLowerCase()
-  const b = body.toLowerCase()
-  if (s.includes(q)) score += 3
-  if (tags.some(t => t.toLowerCase().includes(q))) score += 2
-  if (b.includes(q)) score += 1
-  return score
+  return scoreEntryLegacy(query, summary, tags, body)
 }
 
 /**

@@ -15,3 +15,4 @@
         distillCompactionReminder: false
         distillAssist: false
         distillAssistMaxBytes: 8192
+        recallRanking: token
