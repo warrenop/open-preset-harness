@@ -139,6 +139,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
+| Session distill hook (Phase 1) | 🚧 Tier 1a implemented locally · [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -163,7 +164,7 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 ### Planned (when users need them)
 
 - Expanded scenario library and demo materials
-- Optional distill hook (session → memory)
+- Optional distill hook (session → memory) — [phase-1-distill.md](docs/phase-1-distill.md) (Tier 1a: turn-end reminder, default off)
 - Optional semantic search over memory
 - Domain-level write governance
 

@@ -469,7 +469,7 @@ Normal `tool/result` events. Tools set `output.presentationMeta` (entry id + dom
 
 - Semantic / vector search (Phase 2)
 - Domain ACL / approval workflows (Phase 3)
-- Automatic distill from session log (Phase 1)
+- Automatic distill from session log (Phase 1) — see [phase-1-distill.md](phase-1-distill.md)
 - Cross-project memory federation
 - Replacing `AGENTS.md` or skills
 

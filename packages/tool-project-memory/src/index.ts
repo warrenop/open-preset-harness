@@ -18,6 +18,12 @@ export { recallEntries, memoryStatus } from './recall.ts'
 export { rememberEntry, isMemoryInitialized } from './remember.ts'
 export { prepareIndexInject, projectMemoryIndexSource } from './inject-index.ts'
 export type { IndexInjectPayload } from './inject-index.ts'
+export {
+  prepareDistillReminder,
+  projectMemoryDistillReminderSource,
+  installDistillReminder,
+} from './distill-reminder.ts'
+export type { DistillReminderPayload } from './distill-reminder.ts'
 export { generateIndex } from './index-generator.ts'
 export { resolveMemoryPaths, resolveProjectRoot } from './project-root.ts'
 export { loadAllEntries, parseDomainFile } from './memory-store.ts'

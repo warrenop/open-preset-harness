@@ -4,6 +4,7 @@
  */
 
 import type { Context } from '@deepseek-ai/cordis'
+import { installDistillReminder } from './distill-reminder.ts'
 import { installIndexInject, registerMemoryTools } from './tools.ts'
 import type { ProjectMemoryConfig } from './types.ts'
 import { DEFAULT_CONFIG } from './types.ts'
@@ -26,6 +27,11 @@ export function apply(ctx: Context, config: Config): void {
   if (merged.recallMaxBytes <= 0 || merged.rememberMaxBodyBytes <= 0) {
     throw new Error('recallMaxBytes and rememberMaxBodyBytes must be positive integers')
   }
+  if ((merged.distillReminderMaxBytes ?? DEFAULT_CONFIG.distillReminderMaxBytes!) <= 0
+    || (merged.distillReminderMinTurn ?? DEFAULT_CONFIG.distillReminderMinTurn!) < 1) {
+    throw new Error('distillReminderMaxBytes must be positive and distillReminderMinTurn >= 1')
+  }
   registerMemoryTools(ctx, merged)
   installIndexInject(ctx, merged)
+  installDistillReminder(ctx, merged)
 }

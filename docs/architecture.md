@@ -71,7 +71,7 @@ Agent calls remember(...)
     → tool/result with entry id + path
 ```
 
-Optional Phase 1: distill hook after turn/compaction (opt-in, deployment config).
+Optional Phase 1: distill hook after turn/compaction (opt-in) — [phase-1-distill.md](phase-1-distill.md)
 
 ---
 
@@ -93,6 +93,7 @@ Optional Phase 1: distill hook after turn/compaction (opt-in, deployment config)
 |-------|-------------|
 | 0 | Any preset with `remember` tool can write; git diff is the review layer |
 | 1 | `supersedes` frontmatter + domain helpers — [phase-1-supersede.md](phase-1-supersede.md) |
+| 1 | Session distill hook (opt-in) — [phase-1-distill.md](phase-1-distill.md) |
 | 3 | Domain ACL, approval gate for sensitive domains |
 
 ---

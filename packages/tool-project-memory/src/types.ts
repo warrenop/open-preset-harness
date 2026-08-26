@@ -190,6 +190,12 @@ export interface ProjectMemoryConfig {
   readonly maxDomains: number
   readonly readOnly?: boolean
   readonly writeDenyDomains?: readonly string[]
+  /** Tier 1a: inject turn-end remember reminder. Default: false */
+  readonly distillReminder?: boolean
+  /** Max UTF-8 bytes for distill reminder inject. Default: 2048 */
+  readonly distillReminderMaxBytes?: number
+  /** Minimum turns before first reminder. Default: 2 */
+  readonly distillReminderMinTurn?: number
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -200,4 +206,7 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   maxDomains: 64,
   readOnly: false,
   writeDenyDomains: [],
+  distillReminder: false,
+  distillReminderMaxBytes: 2048,
+  distillReminderMinTurn: 2,
 }

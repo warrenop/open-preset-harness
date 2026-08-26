@@ -4,7 +4,7 @@ English | 中文见下方
 
 **DSH Profile Bundle** — shared project organizational memory for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness): `recall`, `remember`, `memory_status` tools + blank-session `index.md` inject. One memory pool, every preset reads.
 
-Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md) · Phase 1 supersede: [phase-1-supersede.md](../../docs/phase-1-supersede.md)
+Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md) · Phase 1 supersede: [phase-1-supersede.md](../../docs/phase-1-supersede.md) · Phase 1 distill: [phase-1-distill.md](../../docs/phase-1-distill.md)
 
 **Current release:** v0.2.0
 
@@ -87,6 +87,7 @@ Link against a local Harness checkout — see [docs/harness-integration.md](../.
 | `./core` | Programmatic API without loading the plugin row |
 | `rememberEntry` / `recallEntries` | Core recall/remember |
 | `prepareIndexInject` | Index baseline for inject |
+| `prepareDistillReminder` / `installDistillReminder` | Tier 1a turn-end remember reminder (opt-in) |
 
 ---
 

@@ -109,6 +109,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 | 文件约定 `.dsh/memory/` | ✅ |
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
 | Supersede 治理（Phase 1） | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
+| Session 蒸馏 hook（Phase 1） | 📝 [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
 | 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
 
 ---
@@ -133,7 +134,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 可选：session → memory 蒸馏 hook
+- 可选：session → memory 蒸馏 hook — [phase-1-distill.md](docs/phase-1-distill.md)（Tier 1a：turn 结束提醒，默认关）
 - 可选：记忆语义检索
 - 按领域的写入治理
 
