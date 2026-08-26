@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.7.0** — Phase 2b 向量 sidecar recall 已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v0.8.0** — Phase 3b 写入审批 gate 已发布；更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -110,6 +110,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
 | Supersede 治理（Phase 1） | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session 蒸馏 hook（Phase 1） | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
+| 写入治理（Phase 3） | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
 | 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
 
 ---
@@ -117,6 +118,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.8.0）
+
+- 写入审批 gate（Phase 3b）：`writeApprovalDomains` 在 `remember` 前走 Harness 审批
 
 ### 已发布（v0.7.0）
 
@@ -159,8 +164,6 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 - 场景库与 Demo 材料扩充
 - 蒸馏 Tier 3（auto distill）
-- Phase 2b 向量 sidecar（embedding）
-- Phase 3b 受限 domain 审批流
 
 见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
 

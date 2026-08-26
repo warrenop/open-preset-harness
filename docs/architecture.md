@@ -94,7 +94,7 @@ Optional Phase 1: distill hook after turn/compaction (opt-in) — [phase-1-disti
 | 0 | Any preset with `remember` tool can write; git diff is the review layer |
 | 1 | `supersedes` frontmatter + domain helpers — [phase-1-supersede.md](phase-1-supersede.md) |
 | 1 | Session distill hook (opt-in) — [phase-1-distill.md](phase-1-distill.md) |
-| 3 | Domain/preset write ACL — [phase-3-governance.md](phase-3-governance.md) |
+| 3 | Domain/preset write ACL + approval gate — [phase-3-governance.md](phase-3-governance.md) |
 
 ---
 

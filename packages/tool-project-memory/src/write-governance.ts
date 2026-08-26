@@ -1,5 +1,11 @@
-import type { ProjectMemoryConfig } from './types.ts'
+import type { MemoryErrorCode, ProjectMemoryConfig } from './types.ts'
 import { MemoryError } from './types.ts'
+
+/** Pre-dispatch decision for remember (Phase 3a ACL + Phase 3b approval). */
+export type RememberPreExecuteDecision =
+  | { kind: 'allow' }
+  | { kind: 'deny'; reason: string; code: MemoryErrorCode }
+  | { kind: 'ask'; reason: string }
 
 /**
  * Enforce write ACL before remember (Phase 3a).
@@ -43,4 +49,36 @@ export function assertWriteAllowed(
       )
     }
   }
+}
+
+/**
+ * Evaluate remember pre-execute policy: ACL deny before approval ask.
+ * @param config - merged plugin config.
+ * @param domain - target domain id from tool args.
+ * @param presetId - agent preset id from session header, if any.
+ */
+export function evaluateRememberPreExecute(
+  config: ProjectMemoryConfig,
+  domain: string,
+  presetId?: string,
+): RememberPreExecuteDecision {
+  try {
+    assertWriteAllowed(config, domain, presetId)
+  }
+  catch (e) {
+    if (e instanceof MemoryError) {
+      return { kind: 'deny', reason: `${e.code}: ${e.message}`, code: e.code }
+    }
+    throw e
+  }
+
+  const approvalDomains = config.writeApprovalDomains
+  if (approvalDomains && approvalDomains.length > 0 && approvalDomains.includes(domain)) {
+    return {
+      kind: 'ask',
+      reason: `remember to domain "${domain}" requires human approval`,
+    }
+  }
+
+  return { kind: 'allow' }
 }

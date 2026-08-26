@@ -47,7 +47,8 @@ export {
   scoreEntryRanked,
   scoreEntryLegacy,
 } from './recall-ranking.ts'
-export { assertWriteAllowed } from './write-governance.ts'
+export { assertWriteAllowed, evaluateRememberPreExecute } from './write-governance.ts'
+export type { RememberPreExecuteDecision } from './write-governance.ts'
 export {
   embedLocal,
   cosineSimilarity,

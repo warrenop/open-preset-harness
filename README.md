@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.7.0** — Phase 2b vector sidecar recall shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v0.8.0** — Phase 3b write approval gate shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -149,6 +149,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.8.0)
+
+- Write approval gate (Phase 3b): `writeApprovalDomains` triggers Harness approval before `remember`
 
 ### Shipped (v0.7.0)
 
@@ -191,7 +195,6 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 
 - Expanded scenario library and demo materials
 - Distill Tier 3 (auto distill)
-- Phase 3b approval gate for restricted domains
 
 See [docs/scenarios.md](docs/scenarios.md) and [Scenario Issues](.github/ISSUE_TEMPLATE/scenario.yml) to influence priorities.
 

@@ -209,6 +209,8 @@ export interface ProjectMemoryConfig {
   readonly writeDenyPresets?: readonly string[]
   /** When non-empty, only these presets may call remember (Phase 3a). */
   readonly writeAllowPresets?: readonly string[]
+  /** Domains that require Harness approval before remember (Phase 3b). */
+  readonly writeApprovalDomains?: readonly string[]
   /** Tier 1a: inject turn-end remember reminder. Default: false */
   readonly distillReminder?: boolean
   /** Max UTF-8 bytes for distill reminder inject. Default: 2048 */
@@ -240,6 +242,7 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   writeAllowDomains: [],
   writeDenyPresets: [],
   writeAllowPresets: [],
+  writeApprovalDomains: [],
   distillReminder: false,
   distillReminderMaxBytes: 2048,
   distillReminderMinTurn: 2,

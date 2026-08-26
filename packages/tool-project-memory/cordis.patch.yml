@@ -12,6 +12,7 @@
         writeAllowDomains: []
         writeDenyPresets: []
         writeAllowPresets: []
+        writeApprovalDomains: []
         distillReminder: false
         distillReminderMaxBytes: 2048
         distillReminderMinTurn: 2

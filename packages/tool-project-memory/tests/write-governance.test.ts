@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assertWriteAllowed } from '../src/write-governance.ts'
+import { assertWriteAllowed, evaluateRememberPreExecute } from '../src/write-governance.ts'
 import { DEFAULT_CONFIG, MemoryError } from '../src/types.ts'
 
 describe('write governance', () => {
@@ -47,5 +47,35 @@ describe('write governance', () => {
       writeDenyDomains: ['security'],
       writeAllowDomains: ['security'],
     }, 'security', 'security-review')).toThrow(new MemoryError('DOMAIN_WRITE_DENIED', 'writes denied for domain security'))
+  })
+})
+
+describe('remember pre-execute (Phase 3b)', () => {
+  const base = { ...DEFAULT_CONFIG }
+
+  it('allows when writeApprovalDomains is empty', () => {
+    expect(evaluateRememberPreExecute(base, 'security', 'code')).toEqual({ kind: 'allow' })
+  })
+
+  it('asks for configured approval domains after ACL passes', () => {
+    const cfg = { ...base, writeApprovalDomains: ['security', 'client'] }
+    expect(evaluateRememberPreExecute(cfg, 'security', 'code')).toEqual({
+      kind: 'ask',
+      reason: 'remember to domain "security" requires human approval',
+    })
+    expect(evaluateRememberPreExecute(cfg, 'api', 'code')).toEqual({ kind: 'allow' })
+  })
+
+  it('denies ACL failures before approval ask', () => {
+    const cfg = {
+      ...base,
+      writeApprovalDomains: ['client'],
+      writeDenyDomains: ['client'],
+    }
+    expect(evaluateRememberPreExecute(cfg, 'client', 'code')).toEqual({
+      kind: 'deny',
+      reason: 'DOMAIN_WRITE_DENIED: writes denied for domain client',
+      code: 'DOMAIN_WRITE_DENIED',
+    })
   })
 })
