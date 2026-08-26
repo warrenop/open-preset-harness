@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.5.0** — Phase 2 token-ranked recall shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v0.6.0** — Phase 3 domain/preset write ACL shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -141,7 +141,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
 | Recall ranking (Phase 2) | ✅ [phase-2-recall.md](docs/phase-2-recall.md) · [#7](https://github.com/warrenop/open-preset-harness/issues/7) |
-| Write governance (Phase 3) | 🚧 [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
+| Write governance (Phase 3) | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -149,6 +149,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.6.0)
+
+- Write ACL (Phase 3a): `writeAllowDomains`, `writeAllowPresets`, `writeDenyPresets` on `remember`
 
 ### Shipped (v0.5.0)
 

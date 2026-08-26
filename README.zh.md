@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.5.0** — Phase 2 token 排序 recall 已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v0.6.0** — Phase 3 写入 ACL 已发布；更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -117,6 +117,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.6.0）
+
+- 写入 ACL（Phase 3a）：`writeAllowDomains` / `writeAllowPresets` / `writeDenyPresets`
 
 ### 已发布（v0.5.0）
 
@@ -152,7 +156,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 - 场景库与 Demo 材料扩充
 - 蒸馏 Tier 3（auto distill）
 - Phase 2b 向量 sidecar（embedding）
-- 按领域的写入治理
+- Phase 3b 受限 domain 审批流
 
 见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
 
