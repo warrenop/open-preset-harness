@@ -96,11 +96,31 @@ Use `memory_status` to see domains; use `recall` before overwriting related fact
 
 ---
 
-## 6. Tier 1b (draft — compaction)
+## 6. Tier 1b (compaction reminder)
 
-**Hook:** subscribe to session log `compaction/end` or Cordis equivalent when exposed to plugins.
+**Status:** Implemented (v0.3.1) · **Hook:** `session/event` → `compaction/end`
 
-Inject parallel reminder referencing that context was compacted — prioritize distilling facts that would be lost. Requires Harness event wiring research before implementation.
+| Topic | Decision |
+|-------|----------|
+| Default | **Off** — `distillCompactionReminder: false` |
+| Hook | `session/event`, filter `compaction/end` without `error` |
+| Write path | **Never** auto-call `remember` |
+| Visibility | `agent.inject()` on the session's live agent (`ctx.agents.get(session.id)`) |
+| Frequency | Once per successful compaction (no session dedupe) |
+| Content | Reference `compaction/summary` when present in the same bracket; bounded by `distillReminderMaxBytes` |
+| Source | `action: 'distill-compaction-reminder'`, includes `compaction_end_seq` |
+
+```ts
+/** Tier 1b: inject after successful compaction/end. Default: false */
+distillCompactionReminder?: boolean
+```
+
+`cordis.patch.yml`:
+
+```yaml
+config:
+  distillCompactionReminder: true
+```
 
 ---
 
@@ -132,6 +152,15 @@ Inject parallel reminder referencing that context was compacted — prioritize d
 - [x] Typed `source` marker `action: 'distill-reminder'`
 - [x] Unit tests (mock agent context where feasible)
 - [ ] Docs: harness-integration, README roadmap
+
+## 9b. Implementation checklist (Tier 1b)
+
+- [x] Config `distillCompactionReminder` + defaults
+- [x] `installDistillCompactionReminder` on `session/event`
+- [x] Skip failed compaction (`error` on compaction/end)
+- [x] `findCompactionSummaryBeforeEnd` + bounded inject text
+- [x] Typed `source` marker `action: 'distill-compaction-reminder'`
+- [x] Unit tests
 
 ---
 

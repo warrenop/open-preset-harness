@@ -20,10 +20,14 @@ export { prepareIndexInject, projectMemoryIndexSource } from './inject-index.ts'
 export type { IndexInjectPayload } from './inject-index.ts'
 export {
   prepareDistillReminder,
+  prepareDistillCompactionReminder,
+  findCompactionSummaryBeforeEnd,
   projectMemoryDistillReminderSource,
+  projectMemoryDistillCompactionReminderSource,
   installDistillReminder,
+  installDistillCompactionReminder,
 } from './distill-reminder.ts'
-export type { DistillReminderPayload } from './distill-reminder.ts'
+export type { DistillReminderPayload, SessionLogEvent } from './distill-reminder.ts'
 export { generateIndex } from './index-generator.ts'
 export { resolveMemoryPaths, resolveProjectRoot } from './project-root.ts'
 export { loadAllEntries, parseDomainFile } from './memory-store.ts'

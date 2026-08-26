@@ -138,7 +138,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 蒸馏 Tier 1b（compaction 提醒）及 assisted/auto 蒸馏层级
+- 蒸馏 Tier 2+（assisted/auto）
 - 可选：记忆语义检索
 - 按领域的写入治理
 

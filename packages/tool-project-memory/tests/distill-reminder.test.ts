@@ -3,7 +3,10 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
+  findCompactionSummaryBeforeEnd,
   prepareDistillReminder,
+  prepareDistillCompactionReminder,
+  projectMemoryDistillCompactionReminderSource,
   projectMemoryDistillReminderSource,
 } from '../src/distill-reminder.ts'
 import { rememberEntry } from '../src/remember.ts'
@@ -91,6 +94,57 @@ describe('distill reminder', () => {
       version: 1,
       action: 'distill-reminder',
       digest: 'abc123',
+    })
+  })
+
+  it('finds compaction summary in the bracket before compaction/end', () => {
+    const events = [
+      { type: 'compaction/start', seq: 10, data: {} },
+      { type: 'compaction/summary', seq: 11, data: { summary: 'Discussed MFA rollout for admin routes.' } },
+      { type: 'user/message', seq: 12, data: {} },
+      { type: 'compaction/end', seq: 13, data: { turn: 4 } },
+    ]
+    expect(findCompactionSummaryBeforeEnd(events, 13)).toBe('Discussed MFA rollout for admin routes.')
+  })
+
+  it('skips summary from an earlier compaction bracket', () => {
+    const events = [
+      { type: 'compaction/start', seq: 1, data: {} },
+      { type: 'compaction/summary', seq: 2, data: { summary: 'old cycle' } },
+      { type: 'compaction/end', seq: 3, data: { turn: 1 } },
+      { type: 'compaction/start', seq: 10, data: {} },
+      { type: 'compaction/end', seq: 11, data: { turn: 4 } },
+    ]
+    expect(findCompactionSummaryBeforeEnd(events, 11)).toBeUndefined()
+  })
+
+  it('builds compaction reminder with summary excerpt', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = {
+      indexInjectMaxBytes: 4096,
+      recallMaxBytes: 32768,
+      rememberMaxBodyBytes: 16384,
+      maxDomains: 64,
+    }
+
+    const payload = await prepareDistillCompactionReminder(
+      root,
+      config,
+      'Discussed MFA rollout for admin routes.',
+    )
+    expect(payload.text).toContain('compaction just finished')
+    expect(payload.text).toContain('MFA rollout')
+    expect(payload.text).toContain('remember')
+  })
+
+  it('exports typed distill-compaction-reminder source marker', () => {
+    expect(projectMemoryDistillCompactionReminderSource('dig', 42)).toEqual({
+      kind: 'project-memory',
+      version: 1,
+      action: 'distill-compaction-reminder',
+      digest: 'dig',
+      compaction_end_seq: 42,
     })
   })
 })

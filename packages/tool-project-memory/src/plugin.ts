@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '@deepseek-ai/cordis'
-import { installDistillReminder } from './distill-reminder.ts'
+import { installDistillCompactionReminder, installDistillReminder } from './distill-reminder.ts'
 import { installIndexInject, registerMemoryTools } from './tools.ts'
 import type { ProjectMemoryConfig } from './types.ts'
 import { DEFAULT_CONFIG } from './types.ts'
@@ -34,4 +34,5 @@ export function apply(ctx: Context, config: Config): void {
   registerMemoryTools(ctx, merged)
   installIndexInject(ctx, merged)
   installDistillReminder(ctx, merged)
+  installDistillCompactionReminder(ctx, merged)
 }

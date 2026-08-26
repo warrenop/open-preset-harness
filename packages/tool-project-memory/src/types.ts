@@ -196,6 +196,8 @@ export interface ProjectMemoryConfig {
   readonly distillReminderMaxBytes?: number
   /** Minimum turns before first reminder. Default: 2 */
   readonly distillReminderMinTurn?: number
+  /** Tier 1b: inject after successful compaction/end. Default: false */
+  readonly distillCompactionReminder?: boolean
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -209,4 +211,5 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   distillReminder: false,
   distillReminderMaxBytes: 2048,
   distillReminderMinTurn: 2,
+  distillCompactionReminder: false,
 }
