@@ -47,3 +47,4 @@ export {
   scoreEntryRanked,
   scoreEntryLegacy,
 } from './recall-ranking.ts'
+export { assertWriteAllowed } from './write-governance.ts'

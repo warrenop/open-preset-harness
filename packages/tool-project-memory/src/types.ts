@@ -126,6 +126,8 @@ export type MemoryErrorCode =
   | 'MEMORY_READ_FAILED'
   | 'MEMORY_READ_ONLY'
   | 'DOMAIN_WRITE_DENIED'
+  | 'DOMAIN_WRITE_NOT_ALLOWED'
+  | 'PRESET_WRITE_DENIED'
   | 'VALIDATION_FAILED'
   | 'SUPERSEDES_NOT_FOUND'
   | 'SUPERSEDES_ALREADY_REPLACED'
@@ -192,6 +194,12 @@ export interface ProjectMemoryConfig {
   readonly maxDomains: number
   readonly readOnly?: boolean
   readonly writeDenyDomains?: readonly string[]
+  /** When non-empty, only these domains may be written (Phase 3a). */
+  readonly writeAllowDomains?: readonly string[]
+  /** Presets blocked from remember (Phase 3a). */
+  readonly writeDenyPresets?: readonly string[]
+  /** When non-empty, only these presets may call remember (Phase 3a). */
+  readonly writeAllowPresets?: readonly string[]
   /** Tier 1a: inject turn-end remember reminder. Default: false */
   readonly distillReminder?: boolean
   /** Max UTF-8 bytes for distill reminder inject. Default: 2048 */
@@ -216,6 +224,9 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   maxDomains: 64,
   readOnly: false,
   writeDenyDomains: [],
+  writeAllowDomains: [],
+  writeDenyPresets: [],
+  writeAllowPresets: [],
   distillReminder: false,
   distillReminderMaxBytes: 2048,
   distillReminderMinTurn: 2,

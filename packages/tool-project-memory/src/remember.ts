@@ -20,6 +20,7 @@ import type {
 } from './types.ts'
 import { DEFAULT_CONFIG, MemoryError } from './types.ts'
 import { validateKind, validateRememberInput } from './validate.ts'
+import { assertWriteAllowed } from './write-governance.ts'
 
 /**
  * Persist one distilled memory entry.
@@ -37,12 +38,7 @@ export async function rememberEntry(
   now = new Date(),
 ): Promise<RememberOutput> {
   const merged = { ...DEFAULT_CONFIG, ...config }
-  if (merged.readOnly) {
-    throw new MemoryError('MEMORY_READ_ONLY', 'project memory is read-only')
-  }
-  if (merged.writeDenyDomains?.includes(input.domain)) {
-    throw new MemoryError('DOMAIN_WRITE_DENIED', `writes denied for domain ${input.domain}`)
-  }
+  assertWriteAllowed(merged, input.domain, source.preset_id)
 
   validateKind(input.kind)
   validateRememberInput(input, merged.rememberMaxBodyBytes)

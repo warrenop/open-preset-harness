@@ -468,7 +468,7 @@ Normal `tool/result` events. Tools set `output.presentationMeta` (entry id + dom
 ## 7. Phase 0 non-goals
 
 - Semantic / vector search (Phase 2) — see [phase-2-recall.md](phase-2-recall.md) (Tier 2a token ranking shipped in v0.5.0)
-- Domain ACL / approval workflows (Phase 3)
+- Domain ACL / approval workflows (Phase 3) — see [phase-3-governance.md](phase-3-governance.md) (Tier 3a preset/domain ACL in v0.6.0)
 - Automatic distill from session log (Phase 1) — see [phase-1-distill.md](phase-1-distill.md)
 - Cross-project memory federation
 - Replacing `AGENTS.md` or skills

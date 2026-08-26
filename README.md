@@ -141,6 +141,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
 | Recall ranking (Phase 2) | ✅ [phase-2-recall.md](docs/phase-2-recall.md) · [#7](https://github.com/warrenop/open-preset-harness/issues/7) |
+| Write governance (Phase 3) | 🚧 [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -182,8 +183,8 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 
 - Expanded scenario library and demo materials
 - Distill Tier 3 (auto distill)
-- Domain-level write governance
 - Phase 2b vector sidecar (embeddings)
+- Phase 3b approval gate for restricted domains
 
 See [docs/scenarios.md](docs/scenarios.md) and [Scenario Issues](.github/ISSUE_TEMPLATE/scenario.yml) to influence priorities.
 
