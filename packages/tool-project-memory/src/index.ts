@@ -38,6 +38,20 @@ export {
   suggestMemoryCandidates,
   suggestMemoryCandidatesForSession,
 } from './suggest-memory-candidates.ts'
+export {
+  filterAutoDistillCandidates,
+  formatAutoDistillInject,
+  installAutoDistill,
+  projectMemoryAutoDistillSource,
+  resolveAutoDistillDomain,
+  runAutoDistill,
+} from './auto-distill.ts'
+export type {
+  AutoDistillResult,
+  AutoDistillSkipped,
+  AutoDistillTrigger,
+  AutoDistillWritten,
+} from './auto-distill.ts'
 export { resolveMemoryPaths, resolveProjectRoot } from './project-root.ts'
 export { loadAllEntries, parseDomainFile } from './memory-store.ts'
 export { parseEntryFrontmatter, serializeEntryBlock, generateEntryId } from './frontmatter.ts'

@@ -1,6 +1,6 @@
 # Phase 1: Session distill hook
 
-**Status:** Implemented (Tier 1a v0.3.0, Tier 1b v0.3.1, Tier 2 v0.4.0) · **Tracking:** [#5](https://github.com/warrenop/open-preset-harness/issues/5), [#6](https://github.com/warrenop/open-preset-harness/issues/6) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md), [phase-1-supersede.md](phase-1-supersede.md)  
+**Status:** Implemented (Tier 1a v0.3.0, Tier 1b v0.3.1, Tier 2 v0.4.0, Tier 3 v0.9.0) · **Tracking:** [#5](https://github.com/warrenop/open-preset-harness/issues/5), [#6](https://github.com/warrenop/open-preset-harness/issues/6), [#11](https://github.com/warrenop/open-preset-harness/issues/11) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md), [phase-1-supersede.md](phase-1-supersede.md)  
 English | [中文](#中文)
 
 Optional hooks that nudge or assist **session → project memory** distillation after a turn or compaction — without replacing explicit `remember` or bypassing **model-visible ⟺ logged**.
@@ -26,7 +26,7 @@ Phase 0 non-goal explicitly moved this to Phase 1:
 | **1a** | Turn-end reminder | After eligible turn, inject bounded reminder to call `remember` for durable facts | No | **v0.3.0** |
 | **1b** | Compaction reminder | After `compaction/end`, inject reminder referencing compaction summary | No | **v0.3.1** |
 | **2** | Assisted distill | `suggest_memory_candidates` tool — heuristic session scan | No | **v0.4.0** |
-| **3** | Auto distill | Plugin calls LLM + `rememberEntry` programmatically | Yes | Deferred — needs governance |
+| **3** | Auto distill | Heuristic promotion to `rememberEntry` under Phase 3 governance | No (heuristic) | **v0.9.0** |
 
 **Phase 1 closure (minimal):** Tier **1a** (+ config + tests). Tier 1b if compaction event is accessible without forking Harness.
 
@@ -147,9 +147,43 @@ Model workflow: call `suggest_memory_candidates` → review → call `remember` 
 
 ---
 
-## 8. Tier 3 (deferred — auto distill)
+## 8. Tier 3 (auto distill — v0.9.0)
 
-**Auto distill:** programmatic LLM + `rememberEntry` — needs confidence thresholds, domain policy, cost controls, and likely Phase 3 governance.
+**Status:** Implemented (v0.9.0) · **Heuristic auto-write** — promotes Tier 2 candidates to `rememberEntry` under Phase 3 governance. Plugin LLM refinement deferred until Harness exposes stable programmatic completion.
+
+| Topic | Decision |
+|-------|----------|
+| Default | **Off** — `distillAuto: false` |
+| Trigger | `distillAutoTrigger`: `compaction-end` (default) or `turn-stopping` |
+| Source | Tier 2 heuristic scan (`suggestMemoryCandidates`) |
+| Write path | `rememberEntry` with `confidence: low`, tag `auto-distill` |
+| Governance | `assertWriteAllowed`; skip `writeApprovalDomains` by default |
+| Limits | `distillAutoMaxWrites` per session (default 3, max 10) |
+| Eligibility | Facts only by default; require `suggested_domain` by default |
+| Visibility | Post-run `agent.inject` summary — logged, model-visible |
+| Dedupe | Per-session hint digest; no duplicate auto-write same session |
+
+```ts
+distillAuto?: boolean
+distillAutoTrigger?: 'turn-stopping' | 'compaction-end'
+distillAutoMaxWrites?: number
+distillAutoFactsOnly?: boolean
+distillAutoRequireDomain?: boolean
+distillAutoSkipApprovalDomains?: boolean
+distillAutoFallbackDomain?: string
+```
+
+Example — auto-distill after compaction, skip approval domains:
+
+```yaml
+config:
+  distillAuto: true
+  distillAutoTrigger: compaction-end
+  writeApprovalDomains: ['client']
+  distillAutoSkipApprovalDomains: true
+```
+
+**Future:** LLM-based candidate refinement/ranking when Harness programmatic LLM API stabilizes.
 
 ---
 
@@ -157,7 +191,7 @@ Model workflow: call `suggest_memory_candidates` → review → call `remember` 
 
 | Feature | Division |
 |-------|----------|
-| `remember` tool | Still the only write path through Tier 2 |
+| `remember` tool | Write path through Tier 2; Tier 3 adds optional auto-write |
 | Compaction | Shrinks session; distill reminder prompts saving durable slice |
 | Session reference | Episodic cross-session read; not a substitute for distilled memory |
 | Index inject | Blank session baseline; distill reminder is mid-session |
@@ -191,6 +225,14 @@ Model workflow: call `suggest_memory_candidates` → review → call `remember` 
 - [x] Bounded output + dedupe
 - [x] Unit tests
 
+## 10d. Implementation checklist (Tier 3)
+
+- [x] Config `distillAuto*` fields + defaults
+- [x] `runAutoDistill` + Phase 3 ACL / approval-domain skip
+- [x] Hooks: `compaction-end` (default) or `turn-stopping`
+- [x] Post-run inject summary with typed `action: 'auto-distill'`
+- [x] Unit tests
+
 ---
 
 ## 11. Success criteria
@@ -212,7 +254,7 @@ Phase 1 第二项：**session → memory 蒸馏 hook**（可选、默认关闭�
 
 **先做 Tier 1a（v0.3.0）：** 在 eligible turn 结束时 `agent.inject` 提醒调用 `remember`，**不自动写盘**、不在插件里调 LLM。
 
-**后续：** compaction 提醒（1b）、候选摘要（2）、自动蒸馏（3，暂缓）。
+**后续：** compaction 提醒（1b）、候选摘要（2）、自动蒸馏（3 v0.9.0 启发式，LLM 精炼后续）。
 
 ### 配置
 
@@ -226,4 +268,5 @@ Phase 1 第二项：**session → memory 蒸馏 hook**（可选、默认关闭�
 
 | Date | Change |
 |------|------|
+| 2026-08-26 | Tier 3 heuristic auto-distill (v0.9.0) |
 | 2026-08-26 | Initial Phase 1 distill draft (Tier 1a locked for v0.3.0) |

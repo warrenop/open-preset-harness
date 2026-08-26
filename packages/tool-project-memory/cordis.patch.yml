@@ -19,6 +19,9 @@
         distillCompactionReminder: false
         distillAssist: false
         distillAssistMaxBytes: 8192
+        distillAuto: false
+        distillAutoTrigger: compaction-end
+        distillAutoMaxWrites: 3
         recallRanking: token
         vectorSidecar: false
         vectorDimensions: 256

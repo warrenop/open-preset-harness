@@ -223,6 +223,20 @@ export interface ProjectMemoryConfig {
   readonly distillAssist?: boolean
   /** Max UTF-8 bytes for suggest_memory_candidates output. Default: 8192 */
   readonly distillAssistMaxBytes?: number
+  /** Tier 3: auto-write eligible heuristic candidates. Default: false */
+  readonly distillAuto?: boolean
+  /** Tier 3 trigger hook. Default: compaction-end */
+  readonly distillAutoTrigger?: 'turn-stopping' | 'compaction-end'
+  /** Max auto remember calls per session. Default: 3 */
+  readonly distillAutoMaxWrites?: number
+  /** Only auto-write facts. Default: true */
+  readonly distillAutoFactsOnly?: boolean
+  /** Require suggested_domain on candidate. Default: true */
+  readonly distillAutoRequireDomain?: boolean
+  /** Skip writeApprovalDomains (no auto-approval). Default: true */
+  readonly distillAutoSkipApprovalDomains?: boolean
+  /** Fallback domain when requireDomain is false. Default: general */
+  readonly distillAutoFallbackDomain?: string
   /** Recall ranking when query is set. Default: token (Phase 2a). */
   readonly recallRanking?: 'token' | 'legacy' | 'vector'
   /** Tier 2b: maintain vector sidecar on remember. Default: false */
@@ -249,6 +263,13 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   distillCompactionReminder: false,
   distillAssist: false,
   distillAssistMaxBytes: 8192,
+  distillAuto: false,
+  distillAutoTrigger: 'compaction-end',
+  distillAutoMaxWrites: 3,
+  distillAutoFactsOnly: true,
+  distillAutoRequireDomain: true,
+  distillAutoSkipApprovalDomains: true,
+  distillAutoFallbackDomain: 'general',
   recallRanking: 'token',
   vectorSidecar: false,
   vectorDimensions: 256,

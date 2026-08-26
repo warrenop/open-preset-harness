@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.8.0** — Phase 3b write approval gate shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v0.9.0** — Distill Tier 3 heuristic auto-distill shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -149,6 +149,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.9.0)
+
+- Auto distill (Tier 3): `distillAuto` promotes heuristic candidates to `remember` under Phase 3 governance
 
 ### Shipped (v0.8.0)
 
@@ -194,7 +198,7 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 ### Planned (when users need them)
 
 - Expanded scenario library and demo materials
-- Distill Tier 3 (auto distill)
+- Distill Tier 3 LLM refinement (when Harness programmatic LLM stabilizes)
 
 See [docs/scenarios.md](docs/scenarios.md) and [Scenario Issues](.github/ISSUE_TEMPLATE/scenario.yml) to influence priorities.
 

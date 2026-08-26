@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.8.0** — Phase 3b 写入审批 gate 已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v0.9.0** — Distill Tier 3 启发式 auto-distill 已发布；更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -118,6 +118,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.9.0）
+
+- 自动蒸馏（Tier 3）：`distillAuto` 在 Phase 3 治理下将启发式候选写入 `remember`
 
 ### 已发布（v0.8.0）
 
@@ -163,7 +167,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 蒸馏 Tier 3（auto distill）
+- Distill Tier 3 LLM 精炼（待 Harness 程序化 LLM API 稳定）
 
 见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
 

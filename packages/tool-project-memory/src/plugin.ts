@@ -4,6 +4,7 @@
  */
 
 import type { Context } from '@deepseek-ai/cordis'
+import { installAutoDistill } from './auto-distill.ts'
 import { installDistillCompactionReminder, installDistillReminder } from './distill-reminder.ts'
 import { installIndexInject, registerMemoryTools } from './tools.ts'
 import { installRememberApprovalGate } from './write-approval-gate.ts'
@@ -35,6 +36,10 @@ export function apply(ctx: Context, config: Config): void {
   if ((merged.distillAssistMaxBytes ?? DEFAULT_CONFIG.distillAssistMaxBytes!) <= 0) {
     throw new Error('distillAssistMaxBytes must be a positive integer')
   }
+  const autoMax = merged.distillAutoMaxWrites ?? DEFAULT_CONFIG.distillAutoMaxWrites!
+  if (autoMax < 1 || autoMax > 10) {
+    throw new Error('distillAutoMaxWrites must be between 1 and 10')
+  }
   const dims = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
   if (dims < 32 || dims > 4096) {
     throw new Error('vectorDimensions must be between 32 and 4096')
@@ -44,4 +49,5 @@ export function apply(ctx: Context, config: Config): void {
   installDistillReminder(ctx, merged)
   installDistillCompactionReminder(ctx, merged)
   installRememberApprovalGate(ctx, merged)
+  installAutoDistill(ctx, merged)
 }
