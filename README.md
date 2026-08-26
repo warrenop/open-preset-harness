@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.3.0** — Phase 1 distill reminder (Tier 1a) shipped; v0.2.0 supersede and v0.1.0 core remain compatible. Feedback welcome via Issues.
+**v0.3.1** — Phase 1 distill Tier 1b (compaction reminder) shipped; Tier 1a v0.3.0 and earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -139,7 +139,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
-| Session distill hook (Phase 1) | ✅ Tier 1a v0.3.0 · 🚧 Tier 1b local · [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
+| Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -147,6 +147,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.3.1)
+
+- Distill compaction reminder (Tier 1b): opt-in inject after successful `compaction/end`, with optional summary excerpt
 
 ### Shipped (v0.3.0)
 

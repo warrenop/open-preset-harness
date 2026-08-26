@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.3.0** — Phase 1 蒸馏提醒（Tier 1a）已发布；v0.2.0 supersede 与 v0.1.0 核心仍兼容。欢迎 Issue 反馈。
+**v0.3.1** — Phase 1 蒸馏 Tier 1b（compaction 提醒）已发布；Tier 1a v0.3.0 及更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -117,6 +117,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.3.1）
+
+- 蒸馏 compaction 提醒（Tier 1b）：可选，在成功的 `compaction/end` 后 inject，可附带 summary 摘要
 
 ### 已发布（v0.3.0）
 

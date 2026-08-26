@@ -6,7 +6,7 @@ English | 中文见下方
 
 Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md) · Phase 1 supersede: [phase-1-supersede.md](../../docs/phase-1-supersede.md) · Phase 1 distill: [phase-1-distill.md](../../docs/phase-1-distill.md)
 
-**Current release:** v0.3.0
+**Current release:** v0.3.1
 
 ## Install (DSH1024 / Profile Bundle)
 

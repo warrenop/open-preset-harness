@@ -10,4 +10,4 @@ dsh plugin --profile web add "github:warrenop/open-preset-harness#main&path:pack
 
 DSH1024 discovers repos via **`dsh-plugin`** topic + bundle manifest — no manual submit. Listing may lag 1–3 days; install works without store listing.
 
-Release: [v0.3.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.0) (current) · [v0.2.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.2.0) · [v0.1.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.1.0)
+Release: [v0.3.1](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.1) (current) · [v0.3.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.0) · [v0.2.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.2.0) · [v0.1.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.1.0)
