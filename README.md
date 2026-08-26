@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.2.0** — Phase 1 supersede governance shipped; v0.1.0 core bundle remains compatible. Feedback welcome via Issues.
+**v0.3.0** — Phase 1 distill reminder (Tier 1a) shipped; v0.2.0 supersede and v0.1.0 core remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -139,7 +139,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
-| Session distill hook (Phase 1) | 🚧 Tier 1a implemented locally · [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
+| Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -147,6 +147,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.3.0)
+
+- Distill reminder (Tier 1a): opt-in `agent/turn-stopping` inject to call `remember` — default off, no auto-write
 
 ### Shipped (v0.2.0)
 
@@ -164,7 +168,7 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 ### Planned (when users need them)
 
 - Expanded scenario library and demo materials
-- Optional distill hook (session → memory) — [phase-1-distill.md](docs/phase-1-distill.md) (Tier 1a: turn-end reminder, default off)
+- Distill Tier 1b (compaction reminder) and assisted/auto distill tiers
 - Optional semantic search over memory
 - Domain-level write governance
 

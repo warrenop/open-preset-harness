@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.2.0** — Phase 1 supersede 治理已发布；v0.1.0 核心插件仍可用。欢迎 Issue 反馈。
+**v0.3.0** — Phase 1 蒸馏提醒（Tier 1a）已发布；v0.2.0 supersede 与 v0.1.0 核心仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -109,7 +109,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 | 文件约定 `.dsh/memory/` | ✅ |
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
 | Supersede 治理（Phase 1） | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
-| Session 蒸馏 hook（Phase 1） | 📝 [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
+| Session 蒸馏 hook（Phase 1） | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
 | 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
 
 ---
@@ -117,6 +117,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.3.0）
+
+- 蒸馏提醒（Tier 1a）：可选 `agent/turn-stopping` inject 提醒调用 `remember` — 默认关、不自动写盘
 
 ### 已发布（v0.2.0）
 
@@ -134,7 +138,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 可选：session → memory 蒸馏 hook — [phase-1-distill.md](docs/phase-1-distill.md)（Tier 1a：turn 结束提醒，默认关）
+- 蒸馏 Tier 1b（compaction 提醒）及 assisted/auto 蒸馏层级
 - 可选：记忆语义检索
 - 按领域的写入治理
 
