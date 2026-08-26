@@ -34,6 +34,10 @@ export function apply(ctx: Context, config: Config): void {
   if ((merged.distillAssistMaxBytes ?? DEFAULT_CONFIG.distillAssistMaxBytes!) <= 0) {
     throw new Error('distillAssistMaxBytes must be a positive integer')
   }
+  const dims = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
+  if (dims < 32 || dims > 4096) {
+    throw new Error('vectorDimensions must be between 32 and 4096')
+  }
   registerMemoryTools(ctx, merged)
   installIndexInject(ctx, merged)
   installDistillReminder(ctx, merged)

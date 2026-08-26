@@ -1,6 +1,6 @@
 # Phase 2: Recall ranking scale-up
 
-**Status:** Implemented (Tier 2a, v0.5.0) · **Tracking:** [#7](https://github.com/warrenop/open-preset-harness/issues/7) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md)  
+**Status:** Implemented (Tier 2a v0.5.0, Tier 2b v0.7.0) · **Tracking:** [#7](https://github.com/warrenop/open-preset-harness/issues/7), [#9](https://github.com/warrenop/open-preset-harness/issues/9) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md)  
 English | [中文](#中文)
 
 Improve `recall` ranking for larger memory pools — **still file-based, no network, no vector DB**. True embedding/vector search is Phase 2b (deferred until Harness exposes a stable embedding path).
@@ -18,9 +18,31 @@ Phase 0 `recall` scoring is substring match on the full query string (`summary.i
 | Tier | Name | Behavior | Ship target |
 |------|------|----------|-------------|
 | **2a** | Token + IDF ranking | Split query into terms; score with corpus IDF weights | **v0.5.0** |
-| **2b** | Vector sidecar | Optional embeddings on disk + cosine similarity | Deferred |
+| **2b** | Vector sidecar | Optional `.dsh/memory/vectors/v1.json` + `ranking: vector` (local-fhash-v1) | **v0.7.0** |
 
-**Phase 2 closure (minimal):** Tier **2a** only.
+**Phase 2 closure (minimal):** Tier **2a** + **2b** (local embeddings until Harness API).
+
+---
+
+## 7. Tier 2b (vector sidecar)
+
+**Status:** Implemented locally · **Tracking:** [#9](https://github.com/warrenop/open-preset-harness/issues/9) · **Target:** v0.7.0
+
+| Topic | Decision |
+|-------|----------|
+| Default | **Off** — `vectorSidecar: false` |
+| Sidecar | `.dsh/memory/vectors/v1.json` |
+| Model | `local-fhash-v1` — feature-hash + IDF weights, L2-normalized (no network) |
+| Write | Rebuild sidecar on each `remember` when enabled |
+| Read | `recall` with `ranking: 'vector'` — cosine similarity |
+| Dimensions | `vectorDimensions` default 256 (32–4096) |
+| Future | Swap model when Harness exposes embedding API |
+
+```ts
+vectorSidecar?: boolean
+vectorDimensions?: number
+recallRanking?: 'token' | 'legacy' | 'vector'
+```
 
 ---
 

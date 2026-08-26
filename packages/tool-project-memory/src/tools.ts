@@ -71,8 +71,8 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
       },
       ranking: {
         type: 'string',
-        enum: ['token', 'legacy'],
-        description: 'Query ranking mode. Default: token (Phase 2a IDF); legacy restores Phase 0 substring scoring.',
+        enum: ['token', 'legacy', 'vector'],
+        description: 'Query ranking: token (IDF), legacy (substring), vector (sidecar cosine; requires vectorSidecar config).',
       },
     },
     output: {

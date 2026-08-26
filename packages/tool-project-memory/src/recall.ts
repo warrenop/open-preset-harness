@@ -21,6 +21,14 @@ import {
   scoreEntryRanked,
   tokenizeForRecall,
 } from './recall-ranking.ts'
+import {
+  buildEntryIdfMap,
+  embedLocal,
+  ensureVectorSidecar,
+  entryEmbedText,
+  scoreEntryVector,
+  vectorSidecarPath,
+} from './vector-sidecar.ts'
 
 /**
  * Search project memory.
@@ -69,7 +77,24 @@ export async function recallEntries(
   let scored: Scored[]
   if (query.length > 0) {
     const ranking = input.ranking ?? merged.recallRanking ?? DEFAULT_CONFIG.recallRanking!
-    if (ranking === 'legacy') {
+    if (ranking === 'vector') {
+      if (!merged.vectorSidecar) {
+        throw new MemoryError(
+          'VECTOR_SIDECAR_DISABLED',
+          'vector recall requires vectorSidecar: true in plugin config',
+        )
+      }
+      const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
+      const sidecarPath = vectorSidecarPath(paths.memoryRoot)
+      const sidecar = await ensureVectorSidecar(sidecarPath, entries, dimensions)
+      const idf = buildEntryIdfMap(entries)
+      const queryVector = embedLocal(query, dimensions, idf)
+      scored = entries.map(entry => ({
+        entry,
+        score: scoreEntryVector(queryVector, sidecar.entries[entry.frontmatter.id]),
+      }))
+    }
+    else if (ranking === 'legacy') {
       scored = entries.map(entry => ({
         entry,
         score: scoreEntryLegacy(
@@ -197,6 +222,18 @@ export async function memoryStatus(
 
   const entries = await loadAllEntries(paths)
   const supersededBy = buildSupersededMap(entries)
+  const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
+  let vectorMeta: MemoryStatusOutput['vector_sidecar']
+  if (merged.vectorSidecar) {
+    const sidecar = await ensureVectorSidecar(vectorSidecarPath(paths.memoryRoot), entries, dimensions)
+    vectorMeta = {
+      enabled: true,
+      model: sidecar.model,
+      indexed_count: Object.keys(sidecar.entries).length,
+      dimensions: sidecar.dimensions,
+      updated_at: sidecar.updated_at,
+    }
+  }
   const domainMap = new Map<string, { count: number; active: number; last: string | null }>()
   for (const e of entries) {
     const d = e.frontmatter.domain
@@ -245,5 +282,6 @@ export async function memoryStatus(
     domains,
     recent_decisions,
     schema_version: OPH_MEMORY_SCHEMA,
+    ...(vectorMeta ? { vector_sidecar: vectorMeta } : {}),
   }
 }

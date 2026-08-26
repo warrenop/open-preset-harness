@@ -48,3 +48,16 @@ export {
   scoreEntryLegacy,
 } from './recall-ranking.ts'
 export { assertWriteAllowed } from './write-governance.ts'
+export {
+  embedLocal,
+  cosineSimilarity,
+  buildVectorSidecar,
+  loadVectorSidecar,
+  saveVectorSidecar,
+  ensureVectorSidecar,
+  scoreEntryVector,
+  vectorSidecarPath,
+  LOCAL_EMBED_MODEL,
+  OPH_VECTOR_SCHEMA,
+} from './vector-sidecar.ts'
+export type { VectorSidecar } from './vector-sidecar.ts'

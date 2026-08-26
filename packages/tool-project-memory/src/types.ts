@@ -117,12 +117,21 @@ export interface MemoryStatusOutput {
     readonly created_at: string
   }[]
   readonly schema_version: typeof OPH_MEMORY_SCHEMA
+  /** Present when vectorSidecar is enabled and sidecar exists. */
+  readonly vector_sidecar?: {
+    readonly enabled: true
+    readonly model: string
+    readonly indexed_count: number
+    readonly dimensions: number
+    readonly updated_at: string | null
+  }
 }
 
 export type MemoryErrorCode =
   | 'MEMORY_NOT_INITIALIZED'
   | 'DOMAIN_UNKNOWN'
   | 'RECALL_BUDGET_EXCEEDED'
+  | 'VECTOR_SIDECAR_DISABLED'
   | 'MEMORY_READ_FAILED'
   | 'MEMORY_READ_ONLY'
   | 'DOMAIN_WRITE_DENIED'
@@ -176,7 +185,7 @@ export interface RecallInput {
   readonly limit?: number
   readonly include_superseded?: boolean
   /** Ranking mode when query is set. Default from config (`token`). */
-  readonly ranking?: 'token' | 'legacy'
+  readonly ranking?: 'token' | 'legacy' | 'vector'
 }
 
 export interface RememberSource {
@@ -213,7 +222,11 @@ export interface ProjectMemoryConfig {
   /** Max UTF-8 bytes for suggest_memory_candidates output. Default: 8192 */
   readonly distillAssistMaxBytes?: number
   /** Recall ranking when query is set. Default: token (Phase 2a). */
-  readonly recallRanking?: 'token' | 'legacy'
+  readonly recallRanking?: 'token' | 'legacy' | 'vector'
+  /** Tier 2b: maintain vector sidecar on remember. Default: false */
+  readonly vectorSidecar?: boolean
+  /** Vector dimensions for local-fhash-v1. Default: 256 */
+  readonly vectorDimensions?: number
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -234,4 +247,6 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   distillAssist: false,
   distillAssistMaxBytes: 8192,
   recallRanking: 'token',
+  vectorSidecar: false,
+  vectorDimensions: 256,
 }

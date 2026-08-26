@@ -21,6 +21,11 @@ import type {
 import { DEFAULT_CONFIG, MemoryError } from './types.ts'
 import { validateKind, validateRememberInput } from './validate.ts'
 import { assertWriteAllowed } from './write-governance.ts'
+import {
+  buildVectorSidecar,
+  saveVectorSidecar,
+  vectorSidecarPath,
+} from './vector-sidecar.ts'
 
 /**
  * Persist one distilled memory entry.
@@ -116,6 +121,12 @@ export async function rememberEntry(
   const allEntries = await loadAllEntries(paths)
   const indexContent = generateIndex(paths, allEntries)
   await writeIndex(paths, indexContent)
+
+  if (merged.vectorSidecar) {
+    const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
+    const sidecar = buildVectorSidecar(allEntries, dimensions, now)
+    await saveVectorSidecar(vectorSidecarPath(paths.memoryRoot), sidecar)
+  }
 
   const warnings: string[] = []
   if (supersedeTarget?.crossDomain) {

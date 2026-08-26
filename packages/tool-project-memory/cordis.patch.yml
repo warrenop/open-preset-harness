@@ -19,3 +19,5 @@
         distillAssist: false
         distillAssistMaxBytes: 8192
         recallRanking: token
+        vectorSidecar: false
+        vectorDimensions: 256
