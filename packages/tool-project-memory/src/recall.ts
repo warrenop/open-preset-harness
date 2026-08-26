@@ -26,9 +26,29 @@ import {
   embedLocal,
   ensureVectorSidecar,
   entryEmbedText,
+  LLM_KEYWORDS_EMBED_MODEL,
   scoreEntryVector,
+  type VectorEmbedModel,
   vectorSidecarPath,
 } from './vector-sidecar.ts'
+import { resolveEmbedText } from './embed-text-provider.ts'
+
+function resolveVectorEmbedModel(config: ProjectMemoryConfig): VectorEmbedModel {
+  return config.vectorEmbedModel ?? DEFAULT_CONFIG.vectorEmbedModel!
+}
+
+async function embedQueryVector(
+  query: string,
+  dimensions: number,
+  idf: ReturnType<typeof buildEntryIdfMap>,
+  embedModel: VectorEmbedModel,
+): Promise<readonly number[]> {
+  let text = query
+  if (embedModel === LLM_KEYWORDS_EMBED_MODEL) {
+    text = await resolveEmbedText(query)
+  }
+  return embedLocal(text, dimensions, idf)
+}
 
 /**
  * Search project memory.
@@ -85,10 +105,11 @@ export async function recallEntries(
         )
       }
       const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
+      const embedModel = resolveVectorEmbedModel(merged)
       const sidecarPath = vectorSidecarPath(paths.memoryRoot)
-      const sidecar = await ensureVectorSidecar(sidecarPath, entries, dimensions)
+      const sidecar = await ensureVectorSidecar(sidecarPath, entries, dimensions, embedModel)
       const idf = buildEntryIdfMap(entries)
-      const queryVector = embedLocal(query, dimensions, idf)
+      const queryVector = await embedQueryVector(query, dimensions, idf, embedModel)
       scored = entries.map(entry => ({
         entry,
         score: scoreEntryVector(queryVector, sidecar.entries[entry.frontmatter.id]),
@@ -225,7 +246,13 @@ export async function memoryStatus(
   const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
   let vectorMeta: MemoryStatusOutput['vector_sidecar']
   if (merged.vectorSidecar) {
-    const sidecar = await ensureVectorSidecar(vectorSidecarPath(paths.memoryRoot), entries, dimensions)
+    const embedModel = resolveVectorEmbedModel(merged)
+    const sidecar = await ensureVectorSidecar(
+      vectorSidecarPath(paths.memoryRoot),
+      entries,
+      dimensions,
+      embedModel,
+    )
     vectorMeta = {
       enabled: true,
       model: sidecar.model,

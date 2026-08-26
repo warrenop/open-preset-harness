@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.9.0** — Distill Tier 3 heuristic auto-distill shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v1.0.0** — Full roadmap shipped (Phase 0–3, Distill 1–3, LLM assist); dual-preset demo deferred ([#3](https://github.com/warrenop/open-preset-harness/issues/3)).
 
 | Milestone | Status |
 |-----------|--------|
@@ -141,7 +141,9 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
 | Recall ranking (Phase 2) | ✅ [phase-2-recall.md](docs/phase-2-recall.md) · [#7](https://github.com/warrenop/open-preset-harness/issues/7) [#9](https://github.com/warrenop/open-preset-harness/issues/9) |
-| Write governance (Phase 3) | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
+| Write governance (Phase 3) | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) [#10](https://github.com/warrenop/open-preset-harness/issues/10) |
+| Distill + LLM assist | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#11](https://github.com/warrenop/open-preset-harness/issues/11) |
+| Config reference | ✅ [config-reference.md](docs/config-reference.md) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -149,6 +151,11 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v1.0.0)
+
+- Memory LLM assist: `distillAutoLlm`, `vectorEmbedModel: llm-keywords-v1` via Harness `ctx.llm`
+- [Configuration reference](docs/config-reference.md) · [SRE scenario playbook](docs/scenarios/sre-postmortem-playbook.md)
 
 ### Shipped (v0.9.0)
 
@@ -195,10 +202,9 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 - Blank-session `index.md` inject (bounded)
 - Domain-organized memory under `.dsh/memory/`
 
-### Planned (when users need them)
+### Planned
 
-- Expanded scenario library and demo materials
-- Distill Tier 3 LLM refinement (when Harness programmatic LLM stabilizes)
+- Dual-preset demo ([#3](https://github.com/warrenop/open-preset-harness/issues/3)) — walkthrough exists, recording deferred
 
 See [docs/scenarios.md](docs/scenarios.md) and [Scenario Issues](.github/ISSUE_TEMPLATE/scenario.yml) to influence priorities.
 

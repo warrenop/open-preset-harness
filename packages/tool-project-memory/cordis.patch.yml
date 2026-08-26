@@ -22,6 +22,8 @@
         distillAuto: false
         distillAutoTrigger: compaction-end
         distillAutoMaxWrites: 3
+        distillAutoLlm: false
+        vectorEmbedModel: local-fhash-v1
         recallRanking: token
         vectorSidecar: false
         vectorDimensions: 256

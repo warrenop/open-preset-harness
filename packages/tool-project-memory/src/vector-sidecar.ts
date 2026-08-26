@@ -3,14 +3,23 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import type { MemoryEntry } from './types.ts'
 import { buildIdfMap, tokenizeForRecall } from './recall-ranking.ts'
+import { resolveEmbedText } from './embed-text-provider.ts'
 
 export const OPH_VECTOR_SCHEMA = 1 as const
 export const LOCAL_EMBED_MODEL = 'local-fhash-v1' as const
+export const LLM_KEYWORDS_EMBED_MODEL = 'llm-keywords-v1' as const
 
-/** On-disk vector index sidecar (Phase 2b). */
+export type VectorEmbedModel = typeof LOCAL_EMBED_MODEL | typeof LLM_KEYWORDS_EMBED_MODEL
+
+export const VECTOR_EMBED_MODELS: readonly VectorEmbedModel[] = [
+  LOCAL_EMBED_MODEL,
+  LLM_KEYWORDS_EMBED_MODEL,
+]
+
+/** On-disk vector index sidecar (Phase 2b / 2c). */
 export interface VectorSidecar {
   readonly 'oph-vector-schema': typeof OPH_VECTOR_SCHEMA
-  readonly model: typeof LOCAL_EMBED_MODEL
+  readonly model: VectorEmbedModel
   readonly dimensions: number
   readonly updated_at: string
   readonly entries: Readonly<Record<string, readonly number[]>>
@@ -81,20 +90,26 @@ export function buildEntryIdfMap(entries: readonly MemoryEntry[]): Map<string, n
  * @param entries - memory entries to index.
  * @param dimensions - embedding width.
  * @param now - timestamp for updated_at.
+ * @param embedModel - sidecar model id.
  */
-export function buildVectorSidecar(
+export async function buildVectorSidecar(
   entries: readonly MemoryEntry[],
   dimensions: number,
   now = new Date(),
-): VectorSidecar {
+  embedModel: VectorEmbedModel = LOCAL_EMBED_MODEL,
+): Promise<VectorSidecar> {
   const idf = buildEntryIdfMap(entries)
   const map: Record<string, readonly number[]> = {}
   for (const entry of entries) {
-    map[entry.frontmatter.id] = embedLocal(entryEmbedText(entry), dimensions, idf)
+    let text = entryEmbedText(entry)
+    if (embedModel === LLM_KEYWORDS_EMBED_MODEL) {
+      text = await resolveEmbedText(text)
+    }
+    map[entry.frontmatter.id] = embedLocal(text, dimensions, idf)
   }
   return {
     'oph-vector-schema': OPH_VECTOR_SCHEMA,
-    model: LOCAL_EMBED_MODEL,
+    model: embedModel,
     dimensions,
     updated_at: now.toISOString(),
     entries: map,
@@ -102,12 +117,16 @@ export function buildVectorSidecar(
 }
 
 /** Load sidecar or null when missing/invalid. */
-export async function loadVectorSidecar(path: string): Promise<VectorSidecar | null> {
+export async function loadVectorSidecar(
+  path: string,
+  expectedModel?: VectorEmbedModel,
+): Promise<VectorSidecar | null> {
   try {
     const raw = await readFile(path, 'utf8')
     const parsed = JSON.parse(raw) as VectorSidecar
     if (parsed['oph-vector-schema'] !== OPH_VECTOR_SCHEMA) return null
-    if (parsed.model !== LOCAL_EMBED_MODEL) return null
+    if (!VECTOR_EMBED_MODELS.includes(parsed.model as VectorEmbedModel)) return null
+    if (expectedModel && parsed.model !== expectedModel) return null
     if (!parsed.entries || typeof parsed.entries !== 'object') return null
     return parsed
   }
@@ -132,15 +151,17 @@ export async function ensureVectorSidecar(
   path: string,
   entries: readonly MemoryEntry[],
   dimensions: number,
+  embedModel: VectorEmbedModel = LOCAL_EMBED_MODEL,
 ): Promise<VectorSidecar> {
-  const existing = await loadVectorSidecar(path)
+  const existing = await loadVectorSidecar(path, embedModel)
   const ids = new Set(entries.map(e => e.frontmatter.id))
   const stale = !existing
     || existing.dimensions !== dimensions
+    || existing.model !== embedModel
     || entries.some(e => !existing.entries[e.frontmatter.id])
     || Object.keys(existing.entries).some(id => !ids.has(id))
 
-  const sidecar = stale ? buildVectorSidecar(entries, dimensions) : existing
+  const sidecar = stale ? await buildVectorSidecar(entries, dimensions, new Date(), embedModel) : existing
   if (stale) await saveVectorSidecar(path, sidecar)
   return sidecar
 }

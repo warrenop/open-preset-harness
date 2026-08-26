@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.9.0** — Distill Tier 3 启发式 auto-distill 已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v1.0.0** — 主线能力全部发布（Phase 0–3、Distill 1–3、LLM 辅助）；双 Preset Demo 仍延后 ([#3](https://github.com/warrenop/open-preset-harness/issues/3))。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -110,14 +110,21 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
 | Supersede 治理（Phase 1） | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session 蒸馏 hook（Phase 1） | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) |
-| 写入治理（Phase 3） | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) |
-| 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
+| 写入治理（Phase 3） | ✅ [phase-3-governance.md](docs/phase-3-governance.md) · [#8](https://github.com/warrenop/open-preset-harness/issues/8) [#10](https://github.com/warrenop/open-preset-harness/issues/10) |
+| 蒸馏 + LLM 辅助 | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#11](https://github.com/warrenop/open-preset-harness/issues/11) |
+| 配置参考 | ✅ [config-reference.md](docs/config-reference.md) |
+| 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) |
 
 ---
 
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v1.0.0）
+
+- Memory LLM 辅助：`distillAutoLlm`、`vectorEmbedModel: llm-keywords-v1`（Harness `ctx.llm`）
+- [配置参考](docs/config-reference.zh.md) · [SRE 场景手册](docs/scenarios/sre-postmortem-playbook.md)
 
 ### 已发布（v0.9.0）
 
@@ -164,10 +171,9 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 - 空白 session 注入 `index.md`（有字节上限）
 - 按领域组织的 `.dsh/memory/`
 
-### 计划能力（有需求再做）
+### 计划
 
-- 场景库与 Demo 材料扩充
-- Distill Tier 3 LLM 精炼（待 Harness 程序化 LLM API 稳定）
+- 双 Preset Demo ([#3](https://github.com/warrenop/open-preset-harness/issues/3)) — walkthrough 已有，录屏延后
 
 见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
 

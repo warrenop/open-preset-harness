@@ -98,8 +98,16 @@ Append (use **`insert`**, not a bare row — patch ids must exist or use insert)
         rememberMaxBodyBytes: 16384
         maxDomains: 64
         readOnly: false
-        writeDenyDomains: []
+        writeApprovalDomains: []
+        distillReminder: false
+        distillCompactionReminder: false
+        distillAssist: false
+        distillAuto: false
+        vectorSidecar: false
+        recallRanking: token
 ```
+
+Full reference: [config-reference.md](../docs/config-reference.md).
 
 Confirm the tree:
 
@@ -188,5 +196,6 @@ Project memory files under `.dsh/memory/` remain — delete manually if unwanted
 
 ## Next
 
-- [Dual-preset demo walkthrough](demo-walkthrough.md)
+- [Configuration reference](config-reference.md)
+- [Scenario library](scenarios.md) · [SRE playbook](scenarios/sre-postmortem-playbook.md)
 - [Phase 0 API](phase-0-memory-api.md)

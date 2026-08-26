@@ -45,7 +45,7 @@ describe('vector sidecar', () => {
       await rm(root, { recursive: true, force: true })
     }
     const path = vectorSidecarPath(join(root, '.dsh/memory'))
-    const sidecar = buildVectorSidecar([], 32)
+    const sidecar = await buildVectorSidecar([], 32)
     await saveVectorSidecar(path, sidecar)
     const loaded = await loadVectorSidecar(path)
     expect(loaded?.model).toBe(LOCAL_EMBED_MODEL)

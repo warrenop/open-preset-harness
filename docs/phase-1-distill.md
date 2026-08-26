@@ -183,7 +183,15 @@ config:
   distillAutoSkipApprovalDomains: true
 ```
 
-**Future:** LLM-based candidate refinement/ranking when Harness programmatic LLM API stabilizes.
+**Future:** Dedicated embedding API when Harness stabilizes one.
+
+### Tier 3+ LLM refine (v1.0.0)
+
+| Topic | Decision |
+|-------|----------|
+| Config | `distillAutoLlm: true` with `memoryLlmProvider` / `memoryLlmModel` |
+| Behavior | LLM filters/ranks heuristic candidates before auto-write |
+| Fallback | Heuristic candidates when LLM unavailable |
 
 ---
 
@@ -206,7 +214,7 @@ config:
 - [x] Turn completion eligibility check
 - [x] Typed `source` marker `action: 'distill-reminder'`
 - [x] Unit tests (mock agent context where feasible)
-- [ ] Docs: harness-integration, README roadmap
+- [x] Docs: harness-integration, README roadmap, config-reference
 
 ## 10b. Implementation checklist (Tier 1b)
 
@@ -232,6 +240,13 @@ config:
 - [x] Hooks: `compaction-end` (default) or `turn-stopping`
 - [x] Post-run inject summary with typed `action: 'auto-distill'`
 - [x] Unit tests
+- [x] Tier 3+ `distillAutoLlm` + `plugin-llm-bridge` (v1.0.0)
+
+## 10e. Docs
+
+- [x] [config-reference.md](config-reference.md)
+- [x] [harness-integration.md](harness-integration.md) cross-links
+- [x] [SRE playbook](scenarios/sre-postmortem-playbook.md)
 
 ---
 

@@ -73,6 +73,9 @@ export {
   scoreEntryVector,
   vectorSidecarPath,
   LOCAL_EMBED_MODEL,
+  LLM_KEYWORDS_EMBED_MODEL,
   OPH_VECTOR_SCHEMA,
 } from './vector-sidecar.ts'
-export type { VectorSidecar } from './vector-sidecar.ts'
+export type { VectorEmbedModel, VectorSidecar } from './vector-sidecar.ts'
+export { setEmbedTextProvider, resolveEmbedText } from './embed-text-provider.ts'
+export { setAutoDistillRefiner, refineAutoDistillCandidates } from './auto-distill-refiner.ts'

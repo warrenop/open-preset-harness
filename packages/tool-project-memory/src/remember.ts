@@ -25,6 +25,8 @@ import {
   buildVectorSidecar,
   saveVectorSidecar,
   vectorSidecarPath,
+  LOCAL_EMBED_MODEL,
+  LLM_KEYWORDS_EMBED_MODEL,
 } from './vector-sidecar.ts'
 
 /**
@@ -124,7 +126,8 @@ export async function rememberEntry(
 
   if (merged.vectorSidecar) {
     const dimensions = merged.vectorDimensions ?? DEFAULT_CONFIG.vectorDimensions!
-    const sidecar = buildVectorSidecar(allEntries, dimensions, now)
+    const embedModel = merged.vectorEmbedModel ?? DEFAULT_CONFIG.vectorEmbedModel!
+    const sidecar = await buildVectorSidecar(allEntries, dimensions, now, embedModel)
     await saveVectorSidecar(vectorSidecarPath(paths.memoryRoot), sidecar)
   }
 

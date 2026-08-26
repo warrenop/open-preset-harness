@@ -1,6 +1,6 @@
 # Phase 2: Recall ranking scale-up
 
-**Status:** Implemented (Tier 2a v0.5.0, Tier 2b v0.7.0) · **Tracking:** [#7](https://github.com/warrenop/open-preset-harness/issues/7), [#9](https://github.com/warrenop/open-preset-harness/issues/9) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md)  
+**Status:** Implemented (Tier 2a v0.5.0, Tier 2b v0.7.0, Tier 2c v1.0.0) · **Tracking:** [#7](https://github.com/warrenop/open-preset-harness/issues/7), [#9](https://github.com/warrenop/open-preset-harness/issues/9) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md)  
 English | [中文](#中文)
 
 Improve `recall` ranking for larger memory pools — **still file-based, no network, no vector DB**. True embedding/vector search is Phase 2b (deferred until Harness exposes a stable embedding path).
@@ -19,8 +19,9 @@ Phase 0 `recall` scoring is substring match on the full query string (`summary.i
 |------|------|----------|-------------|
 | **2a** | Token + IDF ranking | Split query into terms; score with corpus IDF weights | **v0.5.0** |
 | **2b** | Vector sidecar | Optional `.dsh/memory/vectors/v1.json` + `ranking: vector` (local-fhash-v1) | **v0.7.0** |
+| **2c** | LLM keywords embed | `vectorEmbedModel: llm-keywords-v1` via Harness `ctx.llm` | **v1.0.0** |
 
-**Phase 2 closure (minimal):** Tier **2a** + **2b** (local embeddings until Harness API).
+**Phase 2 closure:** Tier **2a** + **2b** + optional **2c** LLM keyword enhancement.
 
 ---
 
@@ -36,12 +37,21 @@ Phase 0 `recall` scoring is substring match on the full query string (`summary.i
 | Write | Rebuild sidecar on each `remember` when enabled |
 | Read | `recall` with `ranking: 'vector'` — cosine similarity |
 | Dimensions | `vectorDimensions` default 256 (32–4096) |
-| Future | Swap model when Harness exposes embedding API |
+| Future | Swap to dedicated embedding API when Harness exposes one |
+
+### Tier 2c (LLM keywords — v1.0.0)
+
+| Topic | Decision |
+|-------|----------|
+| Config | `vectorEmbedModel: llm-keywords-v1` |
+| Requires | `memoryLlmProvider` + `memoryLlmModel` + composed `ctx.llm` |
+| Behavior | LLM extracts keywords → `embedLocal` on enhanced text |
+| Fallback | Original text when LLM unavailable |
 
 ```ts
-vectorSidecar?: boolean
-vectorDimensions?: number
-recallRanking?: 'token' | 'legacy' | 'vector'
+vectorEmbedModel?: 'local-fhash-v1' | 'llm-keywords-v1'
+memoryLlmProvider?: string
+memoryLlmModel?: string
 ```
 
 ---

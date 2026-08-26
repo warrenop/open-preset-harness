@@ -243,6 +243,17 @@ export interface ProjectMemoryConfig {
   readonly vectorSidecar?: boolean
   /** Vector dimensions for local-fhash-v1. Default: 256 */
   readonly vectorDimensions?: number
+  /** Sidecar embed model. Default: local-fhash-v1 */
+  readonly vectorEmbedModel?: 'local-fhash-v1' | 'llm-keywords-v1'
+  /** Tier 3 LLM refine before auto-write. Default: false */
+  readonly distillAutoLlm?: boolean
+  /** Harness LLM route for memory assist features (required when LLM features enabled). */
+  readonly memoryLlmProvider?: string
+  readonly memoryLlmModel?: string
+  /** Max output tokens for memory LLM calls. Default: 512 */
+  readonly memoryLlmMaxTokens?: number
+  /** Timeout ms for memory LLM calls. Default: 15000 */
+  readonly memoryLlmTimeoutMs?: number
 }
 
 export const DEFAULT_CONFIG: ProjectMemoryConfig = {
@@ -273,4 +284,8 @@ export const DEFAULT_CONFIG: ProjectMemoryConfig = {
   recallRanking: 'token',
   vectorSidecar: false,
   vectorDimensions: 256,
+  vectorEmbedModel: 'local-fhash-v1',
+  distillAutoLlm: false,
+  memoryLlmMaxTokens: 512,
+  memoryLlmTimeoutMs: 15000,
 }

@@ -89,6 +89,7 @@ Use the template in [CONTRIBUTING.md](../CONTRIBUTING.md). Tag related Issues `[
 - **Writer preset (example):** postmortem — root cause, mitigations, runbook deltas
 - **Reader preset (example):** debug — recalls during similar incidents
 - **Memory domain(s):** `sre`, `incidents`
+- **Playbook:** [sre-postmortem-playbook.md](scenarios/sre-postmortem-playbook.md) · Issue [#1](https://github.com/warrenop/open-preset-harness/issues/1)
 - **Without shared memory:** Repeat outages with same root cause
 - **With shared memory:** Institutional incident memory
 

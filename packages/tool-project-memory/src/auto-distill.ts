@@ -10,6 +10,7 @@ import {
   findCompactionSummaryBeforeEnd,
   type SessionLogEvent,
 } from './distill-reminder.ts'
+import { refineAutoDistillCandidates } from './auto-distill-refiner.ts'
 import { memoryStatus } from './recall.ts'
 import { rememberEntry } from './remember.ts'
 import {
@@ -140,7 +141,8 @@ export async function runAutoDistill(
   const status = await memoryStatus(cwd, merged)
   const domainIds = status.domains.map(d => d.id)
   const suggested = suggestMemoryCandidates(events, domainIds, { max_candidates: 10 }, maxBytes)
-  const eligible = filterAutoDistillCandidates(suggested.candidates, merged)
+  let eligible = filterAutoDistillCandidates(suggested.candidates, merged)
+  eligible = [...await refineAutoDistillCandidates(eligible, merged, agent)]
 
   const written: AutoDistillWritten[] = []
   const skipped: AutoDistillSkipped[] = []
