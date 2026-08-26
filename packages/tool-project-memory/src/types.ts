@@ -6,6 +6,7 @@ export type MemoryKind = 'fact' | 'decision'
 export type Confidence = 'low' | 'medium' | 'high'
 export type Sensitivity = 'public' | 'internal' | 'restricted'
 export type DecisionStatus = 'proposed' | 'accepted' | 'deprecated'
+export type EntryStatus = 'superseded'
 
 /** YAML frontmatter for one memory entry. */
 export interface MemoryEntryFrontmatter {
@@ -19,6 +20,9 @@ export interface MemoryEntryFrontmatter {
   readonly tags?: readonly string[]
   readonly sensitivity?: Sensitivity
   readonly supersedes?: string
+  readonly superseded_by?: string
+  readonly superseded_at?: string
+  readonly status?: EntryStatus
   readonly related?: readonly string[]
   readonly expires_at?: string
   readonly locale?: string
@@ -55,6 +59,7 @@ export interface RecallEntry {
   readonly tags: readonly string[]
   readonly sensitivity: Sensitivity
   readonly superseded_by?: string
+  readonly superseded_at?: string
   /** Present when frontmatter expires_at is set. */
   readonly expires_at?: string
   /** True when expires_at is in the past — verify before relying on the entry. */
@@ -82,6 +87,13 @@ export interface RememberOutput {
   readonly created_at: string
   readonly index_updated: boolean
   readonly supersedes?: string
+  readonly warnings?: readonly string[]
+  readonly cross_domain_supersedes?: boolean
+  readonly superseded_entry?: {
+    readonly id: string
+    readonly path: string
+    readonly domain: string
+  }
 }
 
 export interface MemoryStatusOutput {
@@ -94,6 +106,7 @@ export interface MemoryStatusOutput {
   readonly domains: readonly {
     readonly id: string
     readonly entry_count: number
+    readonly active_entry_count: number
     readonly last_updated: string | null
   }[]
   readonly recent_decisions: readonly {
@@ -115,6 +128,9 @@ export type MemoryErrorCode =
   | 'DOMAIN_WRITE_DENIED'
   | 'VALIDATION_FAILED'
   | 'SUPERSEDES_NOT_FOUND'
+  | 'SUPERSEDES_ALREADY_REPLACED'
+  | 'SUPERSEDES_TARGET_ALREADY_SUPERSEDED'
+  | 'SUPERSEDES_PATCH_FAILED'
   | 'MEMORY_WRITE_FAILED'
 
 /** Expected domain failure surfaced to tool execute. */

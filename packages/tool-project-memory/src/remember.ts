@@ -2,12 +2,15 @@ import {
   appendDomainBlock,
   loadAllEntries,
   memoryInitialized,
+  patchEntryAtPath,
+  removeEntryById,
   writeDecisionFile,
   writeIndex,
 } from './memory-store.ts'
 import { generateEntryId, serializeEntryBlock } from './frontmatter.ts'
 import { generateIndex } from './index-generator.ts'
 import { resolveMemoryPaths } from './project-root.ts'
+import { markEntrySuperseded, validateSupersedePreconditions } from './supersede.ts'
 import type {
   MemoryEntryFrontmatter,
   ProjectMemoryConfig,
@@ -47,11 +50,9 @@ export async function rememberEntry(
   const paths = await resolveMemoryPaths(cwd, merged)
   const entries = await loadAllEntries(paths)
 
+  let supersedeTarget: ReturnType<typeof validateSupersedePreconditions> | undefined
   if (input.supersedes) {
-    const found = entries.some(e => e.frontmatter.id === input.supersedes)
-    if (!found) {
-      throw new MemoryError('SUPERSEDES_NOT_FOUND', `supersedes target not found: ${input.supersedes}`)
-    }
+    supersedeTarget = validateSupersedePreconditions(entries, input.supersedes, input.domain)
   }
 
   const id = generateEntryId(now)
@@ -94,9 +95,38 @@ export async function rememberEntry(
     relPath = await writeDecisionFile(paths, `${y}-${m}-${input.decision_slug!}.md`, block)
   }
 
+  if (input.supersedes) {
+    try {
+      await patchEntryAtPath(paths, supersedeTarget!.target.path, input.supersedes, (existing, body) => ({
+        frontmatter: markEntrySuperseded(existing, id, created_at),
+        body,
+      }))
+    }
+    catch (cause) {
+      try {
+        await removeEntryById(paths, id)
+      }
+      catch {
+        // best-effort rollback
+      }
+      if (cause instanceof MemoryError) throw cause
+      throw new MemoryError(
+        'SUPERSEDES_PATCH_FAILED',
+        `failed to patch superseded entry ${input.supersedes}: ${String(cause)}`,
+      )
+    }
+  }
+
   const allEntries = await loadAllEntries(paths)
   const indexContent = generateIndex(paths, allEntries)
   await writeIndex(paths, indexContent)
+
+  const warnings: string[] = []
+  if (supersedeTarget?.crossDomain) {
+    warnings.push(
+      `supersedes entry in domain ${supersedeTarget.target.frontmatter.domain}; new entry is in ${input.domain}`,
+    )
+  }
 
   return {
     kind: 'remember-result',
@@ -107,6 +137,17 @@ export async function rememberEntry(
     created_at,
     index_updated: true,
     ...(input.supersedes ? { supersedes: input.supersedes } : {}),
+    ...(warnings.length > 0 ? { warnings } : {}),
+    ...(supersedeTarget?.crossDomain ? { cross_domain_supersedes: true } : {}),
+    ...(supersedeTarget
+      ? {
+          superseded_entry: {
+            id: supersedeTarget.target.frontmatter.id,
+            path: supersedeTarget.target.path,
+            domain: supersedeTarget.target.frontmatter.domain,
+          },
+        }
+      : {}),
   }
 }
 

@@ -173,6 +173,9 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
           created_at: { type: 'string', required: true },
           index_updated: { type: 'boolean', required: true },
           supersedes: { type: 'string' },
+          warnings: { type: 'array', items: { type: 'string' } },
+          cross_domain_supersedes: { type: 'boolean' },
+          superseded_entry: { type: 'object', additionalProperties: true },
         },
       },
       render: (_args, value) => [{
@@ -198,12 +201,12 @@ export function registerMemoryTools(ctx: Context, config: ProjectMemoryConfig): 
           decision_slug: args.decision_slug,
           expires_at: args.expires_at,
         }
-        return await rememberEntry(
+        return toolJson(await rememberEntry(
           sessionCwd(exec.agent),
           config,
           input,
           rememberSource(exec.agent),
-        )
+        )) as never
       }
       catch (e) {
         if (e instanceof MemoryError) throw new Error(`${e.code}: ${e.message}`)

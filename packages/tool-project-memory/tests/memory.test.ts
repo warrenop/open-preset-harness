@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { parseEntryFrontmatter, serializeEntryBlock } from '../src/frontmatter.ts'
 import { generateIndex } from '../src/index-generator.ts'
 import { appendDomainBlock, loadAllEntries, writeIndex } from '../src/memory-store.ts'
-import { recallEntries } from '../src/recall.ts'
+import { recallEntries, memoryStatus } from '../src/recall.ts'
 import { rememberEntry } from '../src/remember.ts'
 import { resolveMemoryPaths } from '../src/project-root.ts'
 import type { MemoryEntryFrontmatter } from '../src/types.ts'
@@ -163,6 +163,249 @@ describe('remember and recall', () => {
     const parsed = parseEntryFrontmatter(raw)
     expect(parsed.frontmatter.kind).toBe('decision')
     expect(parsed.frontmatter.decision?.status).toBe('accepted')
+  })
+
+  it('back-patches superseded entry and hides it from default recall', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+
+    const old = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Legacy admin routes allowed without MFA temporarily',
+        body: 'Old policy before audit.',
+      },
+      { session_id: 'a' },
+      new Date('2026-08-18T06:00:00.000Z'),
+    )
+
+    const newer = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Admin routes require step-up MFA since audit',
+        body: 'requireStepUp middleware.',
+        supersedes: old.id,
+      },
+      { session_id: 'b' },
+      new Date('2026-08-26T06:00:00.000Z'),
+    )
+
+    const paths = await resolveMemoryPaths(root, config)
+    const entries = await loadAllEntries(paths)
+    const patched = entries.find(e => e.frontmatter.id === old.id)
+    expect(patched?.frontmatter.superseded_by).toBe(newer.id)
+    expect(patched?.frontmatter.status).toBe('superseded')
+
+    const active = await recallEntries(root, config, { domain: 'security' })
+    expect(active.entries).toHaveLength(1)
+    expect(active.entries[0]?.id).toBe(newer.id)
+
+    const withOld = await recallEntries(root, config, { domain: 'security', include_superseded: true })
+    expect(withOld.entries.some(e => e.id === old.id)).toBe(true)
+  })
+
+  it('rejects duplicate supersede of the same target', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+
+    const old = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'First fact about admin route MFA policy baseline',
+        body: 'Version one.',
+      },
+      { session_id: 'a' },
+    )
+
+    await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Second fact replacing the first admin MFA baseline',
+        body: 'Version two.',
+        supersedes: old.id,
+      },
+      { session_id: 'b' },
+    )
+
+    await expect(rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Third fact also trying to replace the same baseline',
+        body: 'Version three.',
+        supersedes: old.id,
+      },
+      { session_id: 'c' },
+    )).rejects.toMatchObject({ code: 'SUPERSEDES_TARGET_ALREADY_SUPERSEDED' })
+  })
+
+  it('rejects second forward supersede link before back-patch markers', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+    const paths = await resolveMemoryPaths(root, config)
+    const oldFm: MemoryEntryFrontmatter = {
+      'oph-memory-schema': 1,
+      id: 'mem-20260818-aaaaaa',
+      kind: 'fact',
+      domain: 'security',
+      created_at: '2026-08-18T06:00:00.000Z',
+      summary: 'Phase 0 style old entry without back-patch markers',
+      confidence: 'medium',
+      source: { session_id: 'legacy' },
+    }
+    const replacerFm: MemoryEntryFrontmatter = {
+      ...oldFm,
+      id: 'mem-20260819-bbbbbb',
+      created_at: '2026-08-19T06:00:00.000Z',
+      summary: 'First replacement still only forward-linked in Phase 0',
+      supersedes: oldFm.id,
+      source: { session_id: 'legacy-2' },
+    }
+    await appendDomainBlock(paths, 'security', serializeEntryBlock(oldFm, 'Old body.', true))
+    await appendDomainBlock(paths, 'security', serializeEntryBlock(replacerFm, 'Replacer body.', true))
+    await writeIndex(paths, generateIndex(paths, await loadAllEntries(paths)))
+
+    await expect(rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Another replacement attempt on the same legacy target',
+        body: 'Should fail.',
+        supersedes: oldFm.id,
+      },
+      { session_id: 'legacy-3' },
+    )).rejects.toMatchObject({ code: 'SUPERSEDES_ALREADY_REPLACED' })
+  })
+
+  it('deprecates superseded decision entries', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+
+    const old = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'decision',
+        domain: 'product',
+        summary: 'Ship v1 with header-based API versioning only',
+        body: 'Original decision.',
+        decision_status: 'accepted',
+        decision_slug: 'api-versioning-header',
+      },
+      { session_id: 'pm' },
+      new Date('2026-08-01T06:00:00.000Z'),
+    )
+
+    await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'decision',
+        domain: 'product',
+        summary: 'Ship v1 with URL path versioning only after review',
+        body: 'Replaces header approach.',
+        decision_status: 'accepted',
+        decision_slug: 'api-versioning-path',
+        supersedes: old.id,
+      },
+      { session_id: 'pm2' },
+      new Date('2026-08-26T06:00:00.000Z'),
+    )
+
+    const paths = await resolveMemoryPaths(root, config)
+    const entries = await loadAllEntries(paths)
+    const patched = entries.find(e => e.frontmatter.id === old.id)
+    expect(patched?.frontmatter.decision?.status).toBe('deprecated')
+    expect(patched?.frontmatter.status).toBe('superseded')
+  })
+
+  it('warns on cross-domain supersede', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+
+    const old = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Security control for admin API routes and MFA policy',
+        body: 'Security domain fact.',
+      },
+      { session_id: 'sec' },
+    )
+
+    const result = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'engineering',
+        summary: 'Engineering implementation note for admin API MFA rollout',
+        body: 'Engineering domain fact.',
+        supersedes: old.id,
+      },
+      { session_id: 'eng' },
+    )
+
+    expect(result.cross_domain_supersedes).toBe(true)
+    expect(result.warnings?.length).toBeGreaterThan(0)
+  })
+
+  it('reports active entry counts in memory_status', async () => {
+    const { root, cleanup: c } = await makeProject()
+    cleanup = c
+    const config = { indexInjectMaxBytes: 4096, recallMaxBytes: 32768, rememberMaxBodyBytes: 16384, maxDomains: 64 }
+
+    const old = await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'Old security baseline before the audit refresh cycle',
+        body: 'old',
+      },
+      { session_id: 'a' },
+    )
+
+    await rememberEntry(
+      root,
+      config,
+      {
+        kind: 'fact',
+        domain: 'security',
+        summary: 'New security baseline after the audit refresh cycle',
+        body: 'new',
+        supersedes: old.id,
+      },
+      { session_id: 'b' },
+    )
+
+    const status = await memoryStatus(root, config)
+    expect(status.domains.find(d => d.id === 'security')?.entry_count).toBe(2)
+    expect(status.domains.find(d => d.id === 'security')?.active_entry_count).toBe(1)
   })
 })
 

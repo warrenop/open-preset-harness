@@ -1,6 +1,6 @@
 # Phase 1: Supersede governance
 
-**Status:** Draft · **Tracking:** [#4](https://github.com/warrenop/open-preset-harness/issues/4) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md) (`oph-memory-schema: 1`)  
+**Status:** Implemented (v0.2.0 draft) · **Tracking:** [#4](https://github.com/warrenop/open-preset-harness/issues/4) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md) (`oph-memory-schema: 1`)  
 English | [中文](#中文)
 
 Phase 1 closes the **supersede lifecycle**: when `remember` replaces an entry, the old block is marked on disk, recall/index stay consistent, and duplicate supersede attempts fail loudly.
@@ -175,13 +175,13 @@ domains: Array<{
 
 ## 11. Implementation checklist
 
-- [ ] `patchEntryById(paths, id, patchFn)` in core / memory-store
-- [ ] `remember`: supersede validation + old-block patch
-- [ ] Tests: happy path, duplicate supersede, target already superseded, decision deprecated, cross-domain warn
-- [ ] `recall`: respect `status: superseded` + legacy map
-- [ ] `index-generator`: latest active summary per domain
-- [ ] Spec cross-links in [phase-0-memory-api.md](phase-0-memory-api.md) §remember step 6
-- [ ] `memory_status` active counts (optional)
+- [x] `patchEntryById` / `patchEntryAtPath` in memory-store
+- [x] `remember`: supersede validation + old-block patch
+- [x] Tests: happy path, duplicate supersede, target already superseded, decision deprecated, cross-domain warn
+- [x] `recall`: respect `status: superseded` + legacy map
+- [x] `index-generator`: latest active summary per domain
+- [x] `memory_status` active counts
+- [x] Spec cross-links in [phase-0-memory-api.md](phase-0-memory-api.md) §remember step 6
 
 ---
 
@@ -228,4 +228,5 @@ Phase 1 让 **supersedes 可 review、可 enforcement**：
 
 | Date | Change |
 |------|--------|
+| 2026-08-26 | Implemented in `dsh-tool-project-memory` (remember back-patch, recall/index, memory_status) |
 | 2026-08-26 | Initial Phase 1 supersede draft (design locked in discussion) |

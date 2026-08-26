@@ -1,4 +1,6 @@
 import YAML from 'yaml'
+import { buildSupersededMap } from './memory-store.ts'
+import { isEntrySuperseded } from './supersede.ts'
 import type { MemoryEntry, ResolvedMemoryPaths } from './types.ts'
 import { OPH_MEMORY_SCHEMA } from './types.ts'
 
@@ -8,6 +10,9 @@ import { OPH_MEMORY_SCHEMA } from './types.ts'
  * @param entries - all loaded entries.
  */
 export function generateIndex(paths: ResolvedMemoryPaths, entries: readonly MemoryEntry[]): string {
+  const supersededBy = buildSupersededMap(entries)
+  const activeEntries = entries.filter(e => !isEntrySuperseded(e, supersededBy))
+
   const domainMap = new Map<string, MemoryEntry[]>()
   for (const e of entries) {
     const list = domainMap.get(e.frontmatter.domain) ?? []
@@ -23,19 +28,22 @@ export function generateIndex(paths: ResolvedMemoryPaths, entries: readonly Memo
     updated_at: now,
     domain_count: domainMap.size,
     entry_count: entries.length,
+    active_entry_count: activeEntries.length,
   }
 
   const rows: string[] = []
   for (const [domain, list] of [...domainMap.entries()].sort(([a], [b]) => a.localeCompare(b))) {
-    const sorted = [...list].sort((a, b) =>
+    const activeInDomain = list.filter(e => !isEntrySuperseded(e, supersededBy))
+    const sorted = [...activeInDomain].sort((a, b) =>
       b.frontmatter.created_at.localeCompare(a.frontmatter.created_at),
     )
-    const latest = sorted[0]!
-    const lastDate = latest.frontmatter.created_at.slice(0, 10)
-    rows.push(`| ${domain} | ${list.length} | ${lastDate} | ${escapePipe(latest.frontmatter.summary)} |`)
+    const latest = sorted[0]
+    const lastDate = latest ? latest.frontmatter.created_at.slice(0, 10) : '—'
+    const latestSummary = latest ? escapePipe(latest.frontmatter.summary) : '—'
+    rows.push(`| ${domain} | ${list.length} | ${lastDate} | ${latestSummary} |`)
   }
 
-  const decisions = entries
+  const decisions = activeEntries
     .filter(e => e.frontmatter.kind === 'decision')
     .sort((a, b) => b.frontmatter.created_at.localeCompare(a.frontmatter.created_at))
     .slice(0, 10)

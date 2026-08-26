@@ -4,6 +4,7 @@ import {
   memoryInitialized,
 } from './memory-store.ts'
 import { resolveMemoryPaths } from './project-root.ts'
+import { isEntrySuperseded } from './supersede.ts'
 import type {
   MemoryEntry,
   MemoryStatusOutput,
@@ -54,7 +55,7 @@ export async function recallEntries(
 
   entries = entries.filter(e => {
     if (kindFilter !== 'any' && e.frontmatter.kind !== kindFilter) return false
-    if (!includeSuperseded && supersededBy.has(e.frontmatter.id)) return false
+    if (!includeSuperseded && isEntrySuperseded(e, supersededBy)) return false
     return true
   })
 
@@ -104,7 +105,10 @@ export async function recallEntries(
       confidence: fm.confidence,
       tags: fm.tags ?? [],
       sensitivity: fm.sensitivity ?? 'internal',
-      ...(supersededBy.has(fm.id) ? { superseded_by: supersededBy.get(fm.id) } : {}),
+      ...(fm.superseded_by ? { superseded_by: fm.superseded_by } : supersededBy.has(fm.id)
+        ? { superseded_by: supersededBy.get(fm.id) }
+        : {}),
+      ...(fm.superseded_at ? { superseded_at: fm.superseded_at } : {}),
       ...(fm.expires_at ? { expires_at: fm.expires_at } : {}),
       ...(isEntryExpired(fm.expires_at) ? { expired: true as const } : {}),
       excerpt,
@@ -162,23 +166,35 @@ export async function memoryStatus(
   }
 
   const entries = await loadAllEntries(paths)
-  const domainMap = new Map<string, { count: number; last: string | null }>()
+  const supersededBy = buildSupersededMap(entries)
+  const domainMap = new Map<string, { count: number; active: number; last: string | null }>()
   for (const e of entries) {
     const d = e.frontmatter.domain
-    const prev = domainMap.get(d) ?? { count: 0, last: null }
-    const last = prev.last === null
-      ? e.frontmatter.created_at
-      : (e.frontmatter.created_at > prev.last ? e.frontmatter.created_at : prev.last)
-    domainMap.set(d, { count: prev.count + 1, last })
+    const prev = domainMap.get(d) ?? { count: 0, active: 0, last: null }
+    const active = !isEntrySuperseded(e, supersededBy)
+    let last = prev.last
+    if (active) {
+      last = last === null || e.frontmatter.created_at > last ? e.frontmatter.created_at : last
+    }
+    domainMap.set(d, {
+      count: prev.count + 1,
+      active: prev.active + (active ? 1 : 0),
+      last,
+    })
   }
 
   const domains = [...domainMap.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
     .slice(0, merged.maxDomains)
-    .map(([id, v]) => ({ id, entry_count: v.count, last_updated: v.last }))
+    .map(([id, v]) => ({
+      id,
+      entry_count: v.count,
+      active_entry_count: v.active,
+      last_updated: v.last,
+    }))
 
   const recent_decisions = entries
-    .filter(e => e.frontmatter.kind === 'decision')
+    .filter(e => e.frontmatter.kind === 'decision' && !isEntrySuperseded(e, supersededBy))
     .sort((a, b) => b.frontmatter.created_at.localeCompare(a.frontmatter.created_at))
     .slice(0, 5)
     .map(e => ({
