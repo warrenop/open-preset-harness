@@ -6,7 +6,7 @@ English | 中文见下方
 
 Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md) · Phase 1 supersede: [phase-1-supersede.md](../../docs/phase-1-supersede.md) · Phase 1 distill: [phase-1-distill.md](../../docs/phase-1-distill.md)
 
-**Current release:** v0.3.1
+**Current release:** v0.4.0
 
 ## Install (DSH1024 / Profile Bundle)
 
@@ -88,6 +88,7 @@ Link against a local Harness checkout — see [docs/harness-integration.md](../.
 | `rememberEntry` / `recallEntries` | Core recall/remember |
 | `prepareIndexInject` | Index baseline for inject |
 | `prepareDistillReminder` / `installDistillReminder` | Tier 1a turn-end remember reminder (opt-in) |
+| `suggest_memory_candidates` / `suggestMemoryCandidates` | Tier 2 heuristic session candidate scan (opt-in) |
 
 ---
 

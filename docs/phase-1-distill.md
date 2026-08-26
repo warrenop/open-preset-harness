@@ -1,6 +1,6 @@
 # Phase 1: Session distill hook
 
-**Status:** Implemented (Tier 1a v0.3.0, Tier 1b v0.3.1) · Tier 2 in progress · **Tracking:** [#5](https://github.com/warrenop/open-preset-harness/issues/5), [#6](https://github.com/warrenop/open-preset-harness/issues/6) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md), [phase-1-supersede.md](phase-1-supersede.md)  
+**Status:** Implemented (Tier 1a v0.3.0, Tier 1b v0.3.1, Tier 2 v0.4.0) · **Tracking:** [#5](https://github.com/warrenop/open-preset-harness/issues/5), [#6](https://github.com/warrenop/open-preset-harness/issues/6) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md), [phase-1-supersede.md](phase-1-supersede.md)  
 English | [中文](#中文)
 
 Optional hooks that nudge or assist **session → project memory** distillation after a turn or compaction — without replacing explicit `remember` or bypassing **model-visible ⟺ logged**.
@@ -126,7 +126,7 @@ config:
 
 ## 7. Tier 2 (assisted distill)
 
-**Status:** Implemented locally · **Tracking:** [#6](https://github.com/warrenop/open-preset-harness/issues/6) · **Target:** v0.4.0
+**Status:** Implemented (v0.4.0) · **Tracking:** [#6](https://github.com/warrenop/open-preset-harness/issues/6) · **Target:** v0.4.0
 
 | Topic | Decision |
 |-------|----------|

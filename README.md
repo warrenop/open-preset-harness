@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.3.1** — Phase 1 distill Tier 1b (compaction reminder) shipped; Tier 1a v0.3.0 and earlier releases remain compatible. Feedback welcome via Issues.
+**v0.4.0** — Phase 1 distill Tier 2 (assisted `suggest_memory_candidates`) shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -139,7 +139,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
-| Session distill hook (Phase 1) | ✅ Tier 1 v0.3.x · 🚧 Tier 2 local · [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
+| Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -147,6 +147,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.4.0)
+
+- Assisted distill (Tier 2): opt-in `suggest_memory_candidates` tool — heuristic session scan, model still calls `remember`
 
 ### Shipped (v0.3.1)
 
