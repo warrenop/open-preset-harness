@@ -131,7 +131,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.4.0** — Phase 1 distill Tier 2 (assisted `suggest_memory_candidates`) shipped; earlier releases remain compatible. Feedback welcome via Issues.
+**v0.5.0** — Phase 2 token-ranked recall shipped; earlier releases remain compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
@@ -140,7 +140,7 @@ More in [docs/scenarios.md](docs/scenarios.md).
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
 | Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Session distill hook (Phase 1) | ✅ [phase-1-distill.md](docs/phase-1-distill.md) · [#5](https://github.com/warrenop/open-preset-harness/issues/5) [#6](https://github.com/warrenop/open-preset-harness/issues/6) |
-| Recall ranking (Phase 2) | 🚧 [phase-2-recall.md](docs/phase-2-recall.md) · [#7](https://github.com/warrenop/open-preset-harness/issues/7) |
+| Recall ranking (Phase 2) | ✅ [phase-2-recall.md](docs/phase-2-recall.md) · [#7](https://github.com/warrenop/open-preset-harness/issues/7) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -148,6 +148,10 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.5.0)
+
+- Token-ranked recall (Phase 2a): default IDF multi-term scoring; `ranking: 'legacy'` restores Phase 0 substring mode
 
 ### Shipped (v0.4.0)
 

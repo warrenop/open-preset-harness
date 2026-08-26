@@ -72,7 +72,7 @@ Until listed, users can install directly via the GitHub source above.
 Pin a release:
 
 ```sh
-dsh plugin --profile web add "github:warrenop/open-preset-harness#v0.4.0&path:packages/tool-project-memory"
+dsh plugin --profile web add "github:warrenop/open-preset-harness#v0.5.0&path:packages/tool-project-memory"
 ```
 
-Latest tag: [v0.4.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.4.0) · [v0.3.1](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.1) · [v0.3.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.0)
+Latest tag: [v0.5.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.5.0) · [v0.4.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.4.0) · [v0.3.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.3.0)

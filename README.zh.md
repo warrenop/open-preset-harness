@@ -101,7 +101,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.4.0** — Phase 1 蒸馏 Tier 2（`suggest_memory_candidates`）已发布；更早版本仍兼容。欢迎 Issue 反馈。
+**v0.5.0** — Phase 2 token 排序 recall 已发布；更早版本仍兼容。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -117,6 +117,10 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.5.0）
+
+- Token + IDF 排序 recall（Phase 2a）：默认多词查询排序；`ranking: 'legacy'` 恢复 Phase 0 子串模式
 
 ### 已发布（v0.4.0）
 
@@ -147,7 +151,7 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 - 场景库与 Demo 材料扩充
 - 蒸馏 Tier 3（auto distill）
-- 可选：记忆语义检索
+- Phase 2b 向量 sidecar（embedding）
 - 按领域的写入治理
 
 见 [scenarios.md](docs/scenarios.md) 与 [Scenario Issue](.github/ISSUE_TEMPLATE/scenario.yml)。
