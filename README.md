@@ -131,13 +131,14 @@ More in [docs/scenarios.md](docs/scenarios.md).
 
 ## Status
 
-**v0.1.0** — DSH Memory Profile Bundle published. Early stage; feedback welcome via Issues.
+**v0.2.0** — Phase 1 supersede governance shipped; v0.1.0 core bundle remains compatible. Feedback welcome via Issues.
 
 | Milestone | Status |
 |-----------|--------|
 | Memory API spec | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
 | `.dsh/memory/` on-disk convention | ✅ |
 | `dsh-tool-project-memory` bundle | ✅ [packages/tool-project-memory](packages/tool-project-memory) |
+| Supersede governance (Phase 1) | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | Dual-preset demo | 📝 deferred · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.md) |
 
 ---
@@ -145,6 +146,12 @@ More in [docs/scenarios.md](docs/scenarios.md).
 ## Roadmap
 
 Capability-oriented, **demand-driven** from Issues and scenario feedback — no fixed dates.
+
+### Shipped (v0.2.0)
+
+- Supersede governance: `remember(supersedes)` back-patches old entries; recall/index show active entries only
+- `expires_at` / recall `expired` warnings
+- Harness smoke + CI (`scripts/smoke.sh`)
 
 ### Shipped (v0.1.0)
 
@@ -156,7 +163,6 @@ Capability-oriented, **demand-driven** from Issues and scenario feedback — no 
 ### Planned (when users need them)
 
 - Expanded scenario library and demo materials
-- Entry supersede / conflict metadata — [phase-1-supersede.md](docs/phase-1-supersede.md)
 - Optional distill hook (session → memory)
 - Optional semantic search over memory
 - Domain-level write governance

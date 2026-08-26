@@ -1,6 +1,6 @@
 {
   "name": "dsh-tool-project-memory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared project organizational memory for DeepSeek Harness — recall, remember, memory_status tools and blank-session index inject across presets",
   "type": "module",
   "main": "lib/plugin.js",

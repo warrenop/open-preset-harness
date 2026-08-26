@@ -1,6 +1,6 @@
 # Phase 1: Supersede governance
 
-**Status:** Implemented (v0.2.0 draft) · **Tracking:** [#4](https://github.com/warrenop/open-preset-harness/issues/4) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md) (`oph-memory-schema: 1`)  
+**Status:** Implemented (v0.2.0) · **Tracking:** [#4](https://github.com/warrenop/open-preset-harness/issues/4) · **Builds on:** [phase-0-memory-api.md](phase-0-memory-api.md) (`oph-memory-schema: 1`)  
 English | [中文](#中文)
 
 Phase 1 closes the **supersede lifecycle**: when `remember` replaces an entry, the old block is marked on disk, recall/index stay consistent, and duplicate supersede attempts fail loudly.

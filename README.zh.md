@@ -101,13 +101,14 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 
 ## 当前状态
 
-**v0.1.0** — DSH Memory Profile Bundle 已发布，欢迎 Issue 反馈。
+**v0.2.0** — Phase 1 supersede 治理已发布；v0.1.0 核心插件仍可用。欢迎 Issue 反馈。
 
 | 里程碑 | 状态 |
 |--------|------|
 | 项目记忆 API 规范 | ✅ [phase-0-memory-api.md](docs/phase-0-memory-api.md) |
 | 文件约定 `.dsh/memory/` | ✅ |
 | `dsh-tool-project-memory` | ✅ [packages/tool-project-memory](packages/tool-project-memory)（DSH1024 Profile Bundle） |
+| Supersede 治理（Phase 1） | ✅ [phase-1-supersede.md](docs/phase-1-supersede.md) · [#4](https://github.com/warrenop/open-preset-harness/issues/4) |
 | 双 Preset Demo | 📝 延后 · [#3](https://github.com/warrenop/open-preset-harness/issues/3) · [walkthrough](docs/demo-walkthrough.zh.md) |
 
 ---
@@ -115,6 +116,12 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ## Roadmap
 
 按 **社区 Issue 与场景需求** 推进，公开文档不写时间盒。
+
+### 已发布（v0.2.0）
+
+- Supersede 治理：`remember(supersedes)` 回写旧 entry、`recall`/index 只展示 active 条目
+- `expires_at` / recall `expired` 警告
+- Harness smoke + CI（`scripts/smoke.sh`）
 
 ### 已发布（v0.1.0）
 
@@ -126,7 +133,6 @@ Harness 把 **Preset（壳）** 和 **Session Log（单次对话记忆）** 分�
 ### 计划能力（有需求再做）
 
 - 场景库与 Demo 材料扩充
-- 条目 supersede / 冲突元数据 — [phase-1-supersede.md](docs/phase-1-supersede.md)
 - 可选：session → memory 蒸馏 hook
 - 可选：记忆语义检索
 - 按领域的写入治理

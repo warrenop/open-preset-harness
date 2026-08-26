@@ -4,7 +4,9 @@ English | 中文见下方
 
 **DSH Profile Bundle** — shared project organizational memory for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness): `recall`, `remember`, `memory_status` tools + blank-session `index.md` inject. One memory pool, every preset reads.
 
-Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md)
+Spec: [docs/phase-0-memory-api.md](../../docs/phase-0-memory-api.md) · Phase 1 supersede: [phase-1-supersede.md](../../docs/phase-1-supersede.md)
+
+**Current release:** v0.2.0
 
 ## Install (DSH1024 / Profile Bundle)
 

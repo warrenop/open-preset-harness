@@ -68,3 +68,11 @@ DSH1024 indexes public repos with topic **`dsh-plugin`** and static bundle evide
 Search: [deepseek1024.com/plugins?q=dsh-tool-project-memory](https://deepseek1024.com/plugins?q=dsh-tool-project-memory)
 
 Until listed, users can install directly via the GitHub source above.
+
+Pin a release:
+
+```sh
+dsh plugin --profile web add "github:warrenop/open-preset-harness#v0.2.0&path:packages/tool-project-memory"
+```
+
+Latest tag: [v0.2.0](https://github.com/warrenop/open-preset-harness/releases/tag/v0.2.0)
